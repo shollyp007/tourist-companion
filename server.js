@@ -617,10 +617,16 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(port, () => {
-    console.log(`\n✓ Tourist Companion server running at http://localhost:${port}`);
-    console.log('\nTo enable live data, add your API keys to the .env file:');
-    console.log('- Google Custom Search API');
-    console.log('- Unsplash API');
-    console.log('- News API\n');
-});
+// Export for Vercel serverless
+module.exports = app;
+
+// Only start server if not in serverless environment
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+    app.listen(port, () => {
+        console.log(`\n✓ Tourist Companion server running at http://localhost:${port}`);
+        console.log('\nTo enable live data, add your API keys to the .env file:');
+        console.log('- Google Custom Search API');
+        console.log('- Unsplash API');
+        console.log('- News API\n');
+    });
+}
