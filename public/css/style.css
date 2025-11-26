@@ -780,6 +780,41 @@ body {
     font-size: 1.1rem;
 }
 
+/* Ad Container */
+.ad-container {
+    background: white;
+    border-radius: 24px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    animation: slideUp 0.5s ease;
+}
+
+.ad-label {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.ad-unit {
+    min-height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+    border-radius: 16px;
+    border: 2px dashed #dee2e6;
+    padding: 20px;
+}
+
+.ad-unit ins.adsbygoogle {
+    background: transparent !important;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .main-title {

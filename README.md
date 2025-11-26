@@ -10,6 +10,7 @@ A comprehensive travel guide application that provides tourists with real-time i
 - **Cost Estimates**: Detailed breakdown of accommodation, food, and transportation costs
 - **Hotel Recommendations**: Browse hotels with Booking.com affiliate integration
 - **Emergency Contacts**: Local emergency numbers and embassy information for 50+ countries
+- **Ad Monetization**: Google AdSense integration ready for revenue generation
 - **Beautiful UI**: Modern gradient design with smooth animations
 
 ## Setup Instructions
@@ -72,6 +73,17 @@ See the **[DEPLOYMENT.md](./DEPLOYMENT.md)** guide for step-by-step instructions
 - **Railway**
 
 All options are **100% free** to get started!
+
+## Monetize Your App
+
+Want to earn revenue from your Tourist Companion app?
+
+See the **[ADSENSE_SETUP.md](./ADSENSE_SETUP.md)** guide for step-by-step instructions to:
+- Set up Google AdSense
+- Integrate ads into your app
+- Start earning money from ad impressions
+
+The app already has ad placement configured between the "Top Attractions" and "Cost Estimates" sections!
 
 ## API Integration Status
 
