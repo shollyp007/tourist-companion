@@ -190,6 +190,134 @@ async function fetchNews(country, query = '') {
     }
 }
 
+// Helper function to generate demographic-specific safety considerations
+function getDemographicSafetyConsiderations(country, gender, race, religion) {
+    const warnings = [];
+    let adjustedRisk = false;
+
+    // Normalize inputs
+    const normalizedCountry = country.toLowerCase();
+    const normalizedGender = gender ? gender.toLowerCase() : '';
+    const normalizedRace = race ? race.toLowerCase() : '';
+    const normalizedReligion = religion ? religion.toLowerCase() : '';
+
+    // Gender-specific considerations
+    if (normalizedGender === 'female') {
+        // Countries with known challenges for women travelers
+        const highRiskForWomen = ['afghanistan', 'pakistan', 'yemen', 'somalia', 'iraq', 'syria'];
+        const moderateRiskForWomen = ['india', 'egypt', 'morocco', 'turkey', 'saudi arabia', 'iran'];
+
+        if (highRiskForWomen.some(c => normalizedCountry.includes(c))) {
+            adjustedRisk = true;
+            warnings.push('⚠️ Women travelers should exercise extreme caution. Consider traveling with a trusted companion and dress conservatively according to local customs');
+            warnings.push('Research local laws regarding women\'s rights and freedoms, which may differ significantly from your home country');
+            warnings.push('Avoid traveling alone, especially at night. Book accommodations in well-reviewed, secure areas');
+        } else if (moderateRiskForWomen.some(c => normalizedCountry.includes(c))) {
+            warnings.push('Women travelers should dress modestly and be aware of local customs regarding gender interactions');
+            warnings.push('Consider avoiding isolated areas and traveling during daylight hours when possible');
+        }
+    }
+
+    // Race/ethnicity-specific considerations
+    if (normalizedRace && normalizedRace !== 'prefer-not-to-say') {
+        // African/Black travelers
+        if (normalizedRace === 'african') {
+            const concerningForAfrican = ['russia', 'ukraine', 'poland', 'china', 'south korea'];
+            if (concerningForAfrican.some(c => normalizedCountry.includes(c))) {
+                warnings.push('Be aware that racial discrimination may occur. Stay in well-populated tourist areas and document any incidents');
+            }
+        }
+
+        // Asian travelers
+        if (normalizedRace === 'asian') {
+            const concerningForAsian = ['afghanistan', 'pakistan', 'some middle eastern countries'];
+            if (concerningForAsian.some(c => normalizedCountry.includes(c))) {
+                warnings.push('Be prepared for possible attention due to your ethnicity. Maintain copies of identification at all times');
+            }
+        }
+
+        // Caucasian travelers
+        if (normalizedRace === 'caucasian') {
+            const concerningForCaucasian = ['afghanistan', 'iraq', 'syria', 'yemen', 'somalia'];
+            if (concerningForCaucasian.some(c => normalizedCountry.includes(c))) {
+                adjustedRisk = true;
+                warnings.push('⚠️ Western/Caucasian travelers may be targeted. Maintain low profile, avoid drawing attention, and stay informed about security situations');
+                warnings.push('Register with your embassy and consider hiring local security guides for travel outside major cities');
+            }
+        }
+
+        // Middle Eastern travelers
+        if (normalizedRace === 'middle-eastern') {
+            const concerningForMiddleEastern = ['israel'];
+            if (concerningForMiddleEastern.some(c => normalizedCountry.includes(c))) {
+                warnings.push('Entry requirements may be stricter. Check visa regulations carefully and be prepared for enhanced security screening');
+            }
+        }
+    }
+
+    // Religion-specific considerations
+    if (normalizedReligion && normalizedReligion !== 'prefer-not-to-say' && normalizedReligion !== '') {
+        // Christian travelers
+        if (normalizedReligion === 'christianity') {
+            const concerningForChristians = ['afghanistan', 'saudi arabia', 'iran', 'pakistan', 'somalia', 'yemen', 'iraq', 'syria'];
+            if (concerningForChristians.some(c => normalizedCountry.includes(c))) {
+                adjustedRisk = true;
+                warnings.push('⚠️ Practice your faith privately. Public display of Christian symbols or practices may pose serious safety risks');
+                warnings.push('Do not carry religious materials or attempt to discuss religion publicly. Respect local religious customs');
+            }
+        }
+
+        // Jewish travelers
+        if (normalizedReligion === 'judaism') {
+            const concerningForJewish = ['afghanistan', 'iran', 'iraq', 'syria', 'yemen', 'pakistan', 'saudi arabia', 'lebanon', 'libya', 'algeria'];
+            if (concerningForJewish.some(c => normalizedCountry.includes(c))) {
+                adjustedRisk = true;
+                warnings.push('⚠️ EXTREME CAUTION: Do not disclose your religion. Remove any visible Jewish symbols or religious items before travel');
+                warnings.push('Traveling to this destination as a Jewish person poses significant risks. Strongly consider alternative destinations');
+            }
+        }
+
+        // Muslim travelers
+        if (normalizedReligion === 'islam') {
+            const concerningForMuslim = ['myanmar', 'china'];
+            if (concerningForMuslim.some(c => normalizedCountry.includes(c))) {
+                warnings.push('Be aware of potential religious discrimination. Muslim Uyghurs face particular challenges in China');
+            }
+        }
+
+        // Hindu travelers
+        if (normalizedReligion === 'hinduism') {
+            const concerningForHindu = ['pakistan', 'afghanistan'];
+            if (concerningForHindu.some(c => normalizedCountry.includes(c))) {
+                adjustedRisk = true;
+                warnings.push('Exercise caution and keep religious practices private. Religious minorities face challenges in this region');
+            }
+        }
+
+        // Atheist/Agnostic travelers
+        if (normalizedReligion === 'atheist') {
+            const concerningForAtheist = ['saudi arabia', 'iran', 'afghanistan', 'pakistan', 'somalia'];
+            if (concerningForAtheist.some(c => normalizedCountry.includes(c))) {
+                warnings.push('Never discuss religious views publicly. Atheism may be illegal or severely stigmatized');
+            }
+        }
+    }
+
+    // Combined demographic risks (e.g., female + Christian + Caucasian in Afghanistan)
+    if (normalizedGender === 'female' && normalizedReligion === 'christianity' && normalizedRace === 'caucasian') {
+        const extremeRiskCountries = ['afghanistan', 'syria', 'iraq', 'yemen', 'somalia'];
+        if (extremeRiskCountries.some(c => normalizedCountry.includes(c))) {
+            adjustedRisk = true;
+            warnings.unshift('🚨 CRITICAL WARNING: Your demographic profile (female, Caucasian, Christian) presents multiple high-risk factors for this destination. Strongly reconsider travel plans or consult professional security services');
+        }
+    }
+
+    return {
+        warnings: warnings,
+        adjustedRisk: adjustedRisk
+    };
+}
+
 // Helper function to get hotels with images from Google Search
 async function getHotelsWithImages(country, baseRate) {
     const hotels = [];
@@ -379,7 +507,7 @@ app.get('/api/search-destinations', async (req, res) => {
 });
 
 app.get('/api/safety-assessment', async (req, res) => {
-    const { country, citizenship } = req.query;
+    const { country, citizenship, gender, race, religion } = req.query;
 
     try {
         let recentNews = [];
@@ -431,20 +559,31 @@ app.get('/api/safety-assessment', async (req, res) => {
             ];
         }
 
+        // Generate demographic-specific safety considerations
+        const demographicConsiderations = getDemographicSafetyConsiderations(country, gender, race, religion);
+
+        // Adjust safety level based on demographic factors
+        if (demographicConsiderations.adjustedRisk) {
+            safetyLevel = 'caution';
+            score = Math.max(score - 15, 60); // Reduce score for high-risk demographics
+        }
+
+        const baseConsiderations = [
+            `Citizens of ${citizenship} should check visa requirements before traveling`,
+            'Follow local laws, customs, and cultural norms',
+            'Keep emergency contacts accessible at all times',
+            'Register with your embassy upon arrival',
+            'Purchase comprehensive travel insurance',
+            'Stay informed about local news and weather conditions'
+        ];
+
         const assessment = {
             level: safetyLevel,
             score: score,
             summary: safetyLevel === 'safe'
                 ? `${country} is generally safe for citizens of ${citizenship}. Normal precautions should be taken. Always stay aware of your surroundings and follow local guidelines.`
                 : `Exercise increased caution when traveling to ${country}. Check recent travel advisories and stay informed about local conditions.`,
-            considerations: [
-                `Citizens of ${citizenship} should check visa requirements before traveling`,
-                'Follow local laws, customs, and cultural norms',
-                'Keep emergency contacts accessible at all times',
-                'Register with your embassy upon arrival',
-                'Purchase comprehensive travel insurance',
-                'Stay informed about local news and weather conditions'
-            ],
+            considerations: [...baseConsiderations, ...demographicConsiderations.warnings],
             recentNews: recentNews
         };
 

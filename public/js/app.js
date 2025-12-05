@@ -2,6 +2,9 @@
 let userData = {
     name: '',
     citizenship: '',
+    gender: '',
+    race: '',
+    religion: '',
     destination: ''
 };
 
@@ -13,6 +16,9 @@ const onboardingScreen = document.getElementById('onboardingScreen');
 const searchScreen = document.getElementById('searchScreen');
 const userNameInput = document.getElementById('userName');
 const citizenshipInput = document.getElementById('citizenship');
+const genderSelect = document.getElementById('gender');
+const raceSelect = document.getElementById('race');
+const religionSelect = document.getElementById('religion');
 const getStartedBtn = document.getElementById('getStartedBtn');
 const userNameDisplay = document.getElementById('userNameDisplay');
 const destinationInput = document.getElementById('destination');
@@ -52,14 +58,20 @@ window.addEventListener('click', (e) => {
 function handleGetStarted() {
     const name = userNameInput.value.trim();
     const citizenship = citizenshipInput.value.trim();
+    const gender = genderSelect.value;
+    const race = raceSelect.value;
+    const religion = religionSelect.value; // Optional
 
-    if (!name || !citizenship) {
-        alert('Please fill in all fields');
+    if (!name || !citizenship || !gender || !race) {
+        alert('Please fill in all required fields (Religion is optional)');
         return;
     }
 
     userData.name = name;
     userData.citizenship = citizenship;
+    userData.gender = gender;
+    userData.race = race;
+    userData.religion = religion;
     userNameDisplay.textContent = name;
 
     // Switch screens
@@ -89,7 +101,7 @@ async function handleSearch() {
         // Fetch all data in parallel
         const [destinations, safety, costs, emergency] = await Promise.all([
             fetch(`/api/search-destinations?country=${encodeURIComponent(destination)}&citizenship=${encodeURIComponent(userData.citizenship)}`).then(r => r.json()),
-            fetch(`/api/safety-assessment?country=${encodeURIComponent(destination)}&citizenship=${encodeURIComponent(userData.citizenship)}`).then(r => r.json()),
+            fetch(`/api/safety-assessment?country=${encodeURIComponent(destination)}&citizenship=${encodeURIComponent(userData.citizenship)}&gender=${encodeURIComponent(userData.gender)}&race=${encodeURIComponent(userData.race)}&religion=${encodeURIComponent(userData.religion)}`).then(r => r.json()),
             fetch(`/api/cost-estimates?country=${encodeURIComponent(destination)}`).then(r => r.json()),
             fetch(`/api/emergency-info?country=${encodeURIComponent(destination)}&citizenship=${encodeURIComponent(userData.citizenship)}`).then(r => r.json())
         ]);
@@ -478,6 +490,11 @@ userNameInput.addEventListener('keypress', (e) => {
 });
 
 citizenshipInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') genderSelect.focus();
+});
+
+// No keypress needed for select elements, but we can trigger submit on last field blur
+religionSelect.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') handleGetStarted();
 });
 
