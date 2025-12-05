@@ -98,6 +98,9 @@ async function handleSearch() {
     searchBtn.disabled = true;
 
     try {
+        // Set beautiful destination background
+        await setDestinationBackground(destination);
+
         // Fetch all data in parallel
         const [destinations, safety, costs, emergency] = await Promise.all([
             fetch(`/api/search-destinations?country=${encodeURIComponent(destination)}&citizenship=${encodeURIComponent(userData.citizenship)}`).then(r => r.json()),
@@ -126,6 +129,32 @@ async function handleSearch() {
         btnText.style.display = 'block';
         btnLoader.style.display = 'none';
         searchBtn.disabled = false;
+    }
+}
+
+// Set beautiful destination background image
+async function setDestinationBackground(country) {
+    try {
+        // Fetch a beautiful landscape image of the destination
+        const imageUrl = `https://source.unsplash.com/1920x1080/?${encodeURIComponent(country)},landscape,travel,landmark`;
+
+        // Preload the image before setting it
+        const img = new Image();
+        img.src = imageUrl;
+
+        await new Promise((resolve, reject) => {
+            img.onload = resolve;
+            img.onerror = reject;
+        });
+
+        // Set the background image with a smooth transition
+        document.body.style.backgroundImage = `url(${imageUrl})`;
+        document.body.classList.add('has-destination-bg');
+
+        console.log(`✓ Background set for ${country}`);
+    } catch (error) {
+        console.log('Could not load destination background, using default gradient');
+        // Keep default gradient if image fails to load
     }
 }
 
