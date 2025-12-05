@@ -135,26 +135,53 @@ async function handleSearch() {
 // Set beautiful destination background image
 async function setDestinationBackground(country) {
     try {
-        // Fetch a beautiful landscape image of the destination
-        const imageUrl = `https://source.unsplash.com/1920x1080/?${encodeURIComponent(country)},landscape,travel,landmark`;
+        console.log(`🎨 Loading background image for ${country}...`);
+
+        // Try multiple image sources for better reliability
+        const imageSources = [
+            `https://source.unsplash.com/1920x1080/?${encodeURIComponent(country)},landscape`,
+            `https://source.unsplash.com/1920x1080/?${encodeURIComponent(country)},travel`,
+            `https://source.unsplash.com/1920x1080/?${encodeURIComponent(country)},nature`
+        ];
+
+        // Use the first source (will be random each time due to Unsplash behavior)
+        const imageUrl = imageSources[0];
+
+        console.log(`📸 Image URL: ${imageUrl}`);
 
         // Preload the image before setting it
         const img = new Image();
-        img.src = imageUrl;
 
-        await new Promise((resolve, reject) => {
-            img.onload = resolve;
-            img.onerror = reject;
+        const loadPromise = new Promise((resolve, reject) => {
+            const timeout = setTimeout(() => {
+                reject(new Error('Image load timeout'));
+            }, 10000); // 10 second timeout
+
+            img.onload = () => {
+                clearTimeout(timeout);
+                console.log('✅ Background image loaded successfully');
+                resolve();
+            };
+
+            img.onerror = (error) => {
+                clearTimeout(timeout);
+                console.error('❌ Failed to load background image:', error);
+                reject(error);
+            };
         });
 
+        img.src = imageUrl;
+        await loadPromise;
+
         // Set the background image with a smooth transition
-        document.body.style.backgroundImage = `url(${imageUrl})`;
+        document.body.style.backgroundImage = `url("${imageUrl}")`;
         document.body.classList.add('has-destination-bg');
 
-        console.log(`✓ Background set for ${country}`);
+        console.log(`🎨 Background successfully set for ${country}`);
     } catch (error) {
-        console.log('Could not load destination background, using default gradient');
+        console.warn('⚠️ Could not load destination background, using default gradient:', error.message);
         // Keep default gradient if image fails to load
+        // Don't add the has-destination-bg class if image failed
     }
 }
 
