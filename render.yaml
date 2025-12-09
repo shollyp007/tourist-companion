@@ -18,3 +18,7 @@ services:
         sync: false
       - key: BOOKING_AFFILIATE_ID
         sync: false
+      - key: ADSENSE_PUBLISHER_ID
+        sync: false
+      - key: ADSENSE_AD_SLOT_ID
+        sync: false

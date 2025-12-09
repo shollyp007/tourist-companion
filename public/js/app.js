@@ -10,6 +10,7 @@ let userData = {
 
 let emergencyData = null;
 let bookingConfig = null;
+let adsenseConfig = null;
 
 // DOM Elements
 const onboardingScreen = document.getElementById('onboardingScreen');
@@ -39,8 +40,74 @@ async function loadBookingConfig() {
     }
 }
 
+// Load Google AdSense configuration
+async function loadAdSenseConfig() {
+    try {
+        const response = await fetch('/api/adsense-config');
+        adsenseConfig = await response.json();
+
+        if (adsenseConfig.isConfigured) {
+            console.log('✓ Google AdSense is configured');
+            initializeAdSense();
+        } else {
+            console.log('ℹ Google AdSense not configured. Add ADSENSE_PUBLISHER_ID and ADSENSE_AD_SLOT_ID to your environment variables.');
+        }
+    } catch (error) {
+        console.error('Error loading AdSense config:', error);
+        adsenseConfig = { publisherId: null, adSlotId: null, isConfigured: false };
+    }
+}
+
+// Initialize Google AdSense
+function initializeAdSense() {
+    if (!adsenseConfig || !adsenseConfig.isConfigured) {
+        return;
+    }
+
+    const { publisherId, adSlotId } = adsenseConfig;
+
+    // Load the AdSense script
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${publisherId}`;
+    script.crossOrigin = 'anonymous';
+    document.head.appendChild(script);
+
+    // Create the ad unit HTML
+    const adContainer = document.getElementById('ad-container');
+    const adUnit = document.getElementById('adsense-unit');
+
+    if (adContainer && adUnit) {
+        // Create the ins element for the ad
+        const ins = document.createElement('ins');
+        ins.className = 'adsbygoogle';
+        ins.style.display = 'block';
+        ins.setAttribute('data-ad-client', publisherId);
+        ins.setAttribute('data-ad-slot', adSlotId);
+        ins.setAttribute('data-ad-format', 'auto');
+        ins.setAttribute('data-full-width-responsive', 'true');
+
+        // Add the ins element to the ad unit
+        adUnit.appendChild(ins);
+
+        // Show the ad container
+        adContainer.style.display = 'block';
+
+        // Initialize the ad
+        script.onload = () => {
+            try {
+                (window.adsbygoogle = window.adsbygoogle || []).push({});
+                console.log('✓ Google AdSense ad initialized');
+            } catch (error) {
+                console.error('Error initializing AdSense ad:', error);
+            }
+        };
+    }
+}
+
 // Event Listeners
 loadBookingConfig(); // Load affiliate config when page loads
+loadAdSenseConfig(); // Load AdSense config when page loads
 getStartedBtn.addEventListener('click', handleGetStarted);
 searchBtn.addEventListener('click', handleSearch);
 emergencyBtn.addEventListener('click', showEmergencyModal);

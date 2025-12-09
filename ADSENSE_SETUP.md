@@ -120,58 +120,58 @@ After creating the ad unit, Google will show you the ad code. It looks like this
 
 ## Integrating AdSense into Your App
 
-Your Tourist Companion app already has an ad placement ready! You just need to replace the placeholder values.
+Your Tourist Companion app uses **environment variables** for AdSense configuration, making it super easy to set up!
 
-### Step 1: Open the HTML File
+### Step 1: Add Environment Variables
 
-1. Navigate to: `public/index.html`
-2. Find the section marked `<!-- Google AdSense Ad Unit -->` (around line 162)
-
-### Step 2: Replace Placeholder Values
-
-Find this code:
-```html
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
-     crossorigin="anonymous"></script>
-<!-- Tourist Companion Ad -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-     data-ad-slot="YYYYYYYYYY"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-```
-
-Replace:
-- `ca-pub-XXXXXXXXXXXXXXXX` with your actual Publisher ID (in TWO places)
-- `YYYYYYYYYY` with your actual Ad Slot ID
-
-### Step 3: Example
-
-Here's what it should look like with real values:
-
-```html
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1234567890123456"
-     crossorigin="anonymous"></script>
-<!-- Tourist Companion Ad -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1234567890123456"
-     data-ad-slot="9876543210"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-```
-
-### Step 4: Save and Deploy
-
-1. Save the `index.html` file
-2. Commit your changes:
+**For Local Development:**
+1. Create a `.env` file in your project root (or copy `.env.example`):
    ```bash
-   git add public/index.html
-   git commit -m "Add Google AdSense integration"
-   git push
+   cp .env.example .env
    ```
-3. Your deployment platform (Vercel/Render/Railway) will automatically redeploy with the new ads
+
+2. Edit the `.env` file and add your AdSense credentials:
+   ```env
+   ADSENSE_PUBLISHER_ID=ca-pub-1234567890123456
+   ADSENSE_AD_SLOT_ID=9876543210
+   ```
+
+   Replace:
+   - `ca-pub-1234567890123456` with your actual Publisher ID
+   - `9876543210` with your actual Ad Slot ID
+
+**For Production (Vercel/Render/Railway):**
+
+**Vercel:**
+1. Go to your project dashboard
+2. Settings → Environment Variables
+3. Add:
+   - `ADSENSE_PUBLISHER_ID` = `ca-pub-1234567890123456`
+   - `ADSENSE_AD_SLOT_ID` = `9876543210`
+
+**Render:**
+1. Go to your web service dashboard
+2. Environment → Environment Variables
+3. Add:
+   - `ADSENSE_PUBLISHER_ID` = `ca-pub-1234567890123456`
+   - `ADSENSE_AD_SLOT_ID` = `9876543210`
+
+**Railway:**
+1. Go to your project
+2. Variables tab
+3. Add:
+   - `ADSENSE_PUBLISHER_ID` = `ca-pub-1234567890123456`
+   - `ADSENSE_AD_SLOT_ID` = `9876543210`
+
+### Step 2: That's It!
+
+The app will automatically:
+- ✅ Load your AdSense configuration
+- ✅ Inject the AdSense script
+- ✅ Display ads when results are shown
+- ✅ Show a message in console if AdSense is not configured
+
+**No need to edit HTML files!** Everything is handled dynamically.
 
 ---
 

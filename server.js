@@ -14,6 +14,8 @@ const GOOGLE_SEARCH_ENGINE_ID = process.env.GOOGLE_SEARCH_ENGINE_ID;
 const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
 const NEWS_API_KEY = process.env.NEWS_API_KEY;
 const BOOKING_AFFILIATE_ID = process.env.BOOKING_AFFILIATE_ID;
+const ADSENSE_PUBLISHER_ID = process.env.ADSENSE_PUBLISHER_ID;
+const ADSENSE_AD_SLOT_ID = process.env.ADSENSE_AD_SLOT_ID;
 
 // Check if APIs are configured
 const hasGoogleAPI = GOOGLE_API_KEY && GOOGLE_API_KEY !== 'your_google_api_key_here';
@@ -959,6 +961,18 @@ app.get('/api/booking-config', (req, res) => {
     res.json({
         affiliateId: BOOKING_AFFILIATE_ID || null,
         hasAffiliateId: BOOKING_AFFILIATE_ID && BOOKING_AFFILIATE_ID !== 'your_booking_affiliate_id_here'
+    });
+});
+
+// Google AdSense Configuration
+app.get('/api/adsense-config', (req, res) => {
+    const hasPublisherId = ADSENSE_PUBLISHER_ID && ADSENSE_PUBLISHER_ID !== 'your_adsense_publisher_id_here';
+    const hasAdSlotId = ADSENSE_AD_SLOT_ID && ADSENSE_AD_SLOT_ID !== 'your_adsense_ad_slot_id_here';
+
+    res.json({
+        publisherId: hasPublisherId ? ADSENSE_PUBLISHER_ID : null,
+        adSlotId: hasAdSlotId ? ADSENSE_AD_SLOT_ID : null,
+        isConfigured: hasPublisherId && hasAdSlotId
     });
 });
 
