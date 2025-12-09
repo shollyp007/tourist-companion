@@ -132,6 +132,189 @@ async function handleSearch() {
     }
 }
 
+// Extract dominant colors from an image
+function extractColorsFromImage(img) {
+    try {
+        // Create a canvas to analyze the image
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Scale down for performance
+        const scaleFactor = 0.25;
+        canvas.width = img.width * scaleFactor;
+        canvas.height = img.height * scaleFactor;
+
+        // Draw image to canvas
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // Get image data
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const pixels = imageData.data;
+
+        // Sample pixels and build color map
+        const colorMap = {};
+        const step = 4; // Sample every nth pixel for performance
+
+        for (let i = 0; i < pixels.length; i += step * 4) {
+            const r = pixels[i];
+            const g = pixels[i + 1];
+            const b = pixels[i + 2];
+            const a = pixels[i + 3];
+
+            // Skip transparent pixels
+            if (a < 125) continue;
+
+            // Skip very dark or very light pixels
+            const brightness = (r + g + b) / 3;
+            if (brightness < 30 || brightness > 240) continue;
+
+            // Quantize colors to reduce variations
+            const quantize = 32;
+            const key = `${Math.round(r / quantize) * quantize},${Math.round(g / quantize) * quantize},${Math.round(b / quantize) * quantize}`;
+
+            colorMap[key] = (colorMap[key] || 0) + 1;
+        }
+
+        // Sort by frequency
+        const sortedColors = Object.entries(colorMap)
+            .sort((a, b) => b[1] - a[1])
+            .map(([color]) => {
+                const [r, g, b] = color.split(',').map(Number);
+                return { r, g, b };
+            });
+
+        if (sortedColors.length === 0) {
+            return null;
+        }
+
+        // Find complementary colors
+        const primary = sortedColors[0];
+        const secondary = sortedColors.find((c, i) => {
+            if (i === 0) return false;
+            // Find a color that's different enough from primary
+            const dist = Math.sqrt(
+                Math.pow(c.r - primary.r, 2) +
+                Math.pow(c.g - primary.g, 2) +
+                Math.pow(c.b - primary.b, 2)
+            );
+            return dist > 100;
+        }) || sortedColors[Math.min(3, sortedColors.length - 1)];
+
+        console.log('🎨 Extracted colors:', { primary, secondary });
+
+        return { primary, secondary };
+    } catch (error) {
+        console.error('Error extracting colors:', error);
+        return null;
+    }
+}
+
+// Apply color theme to the page
+function applyColorTheme(colors) {
+    if (!colors) return;
+
+    const { primary, secondary } = colors;
+
+    // Create CSS color strings
+    const primaryRGB = `${primary.r}, ${primary.g}, ${primary.b}`;
+    const secondaryRGB = `${secondary.r}, ${secondary.g}, ${secondary.b}`;
+
+    // Calculate lighter and darker variations
+    const primaryLight = {
+        r: Math.min(255, primary.r + 40),
+        g: Math.min(255, primary.g + 40),
+        b: Math.min(255, primary.b + 40)
+    };
+
+    const secondaryLight = {
+        r: Math.min(255, secondary.r + 30),
+        g: Math.min(255, secondary.g + 30),
+        b: Math.min(255, secondary.b + 30)
+    };
+
+    // Create gradients
+    const primaryGradient = `linear-gradient(135deg, rgb(${primary.r}, ${primary.g}, ${primary.b}) 0%, rgb(${secondary.r}, ${secondary.g}, ${secondary.b}) 100%)`;
+    const secondaryGradient = `linear-gradient(135deg, rgb(${primaryLight.r}, ${primaryLight.g}, ${primaryLight.b}) 0%, rgb(${secondaryLight.r}, ${secondaryLight.g}, ${secondaryLight.b}) 100%)`;
+
+    console.log('🎨 Applying color theme...');
+
+    // Update CSS custom properties
+    document.documentElement.style.setProperty('--primary-gradient', primaryGradient);
+    document.documentElement.style.setProperty('--secondary-gradient', secondaryGradient);
+    document.documentElement.style.setProperty('--theme-primary', `rgb(${primaryRGB})`);
+    document.documentElement.style.setProperty('--theme-secondary', `rgb(${secondaryRGB})`);
+
+    // Update specific UI elements for immediate visual feedback
+    const style = document.createElement('style');
+    style.id = 'dynamic-theme';
+    style.textContent = `
+        .section-title svg {
+            color: rgb(${primary.r}, ${primary.g}, ${primary.b}) !important;
+        }
+
+        .emergency-floating-btn {
+            background: ${primaryGradient} !important;
+        }
+
+        .btn {
+            background: ${primaryGradient} !important;
+            box-shadow: 0 4px 15px rgba(${primaryRGB}, 0.4) !important;
+        }
+
+        .btn:hover {
+            box-shadow: 0 6px 20px rgba(${primaryRGB}, 0.5) !important;
+        }
+
+        .safety-score {
+            background: ${primaryGradient} !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        .considerations-list li:before {
+            background: ${primaryGradient} !important;
+        }
+
+        .news-item {
+            border-left-color: rgb(${primary.r}, ${primary.g}, ${primary.b}) !important;
+        }
+
+        .attraction-card::after {
+            background: ${primaryGradient} !important;
+        }
+
+        .daily-budget {
+            background: ${primaryGradient} !important;
+        }
+
+        .hotel-price {
+            color: rgb(${primary.r}, ${primary.g}, ${primary.b}) !important;
+        }
+
+        .privacy-notice svg,
+        .guide-card h4,
+        .news-item h4:hover,
+        .tips-list li:before {
+            color: rgb(${primary.r}, ${primary.g}, ${primary.b}) !important;
+        }
+
+        .form-group input:focus {
+            border-color: rgb(${primary.r}, ${primary.g}, ${primary.b}) !important;
+            box-shadow: 0 0 0 4px rgba(${primaryRGB}, 0.1) !important;
+        }
+    `;
+
+    // Remove old dynamic theme if exists
+    const oldStyle = document.getElementById('dynamic-theme');
+    if (oldStyle) {
+        oldStyle.remove();
+    }
+
+    document.head.appendChild(style);
+
+    console.log('✅ Color theme applied successfully!');
+}
+
 // Set beautiful destination background image
 async function setDestinationBackground(country) {
     try {
@@ -151,6 +334,7 @@ async function setDestinationBackground(country) {
 
         // Preload the image before setting it
         const img = new Image();
+        img.crossOrigin = 'Anonymous'; // Enable CORS for canvas analysis
 
         const loadPromise = new Promise((resolve, reject) => {
             const timeout = setTimeout(() => {
@@ -173,6 +357,14 @@ async function setDestinationBackground(country) {
         img.src = imageUrl;
         await loadPromise;
 
+        // Extract colors from the image
+        const colors = extractColorsFromImage(img);
+
+        // Apply color theme
+        if (colors) {
+            applyColorTheme(colors);
+        }
+
         // Set the background image with a smooth transition
         document.body.style.backgroundImage = `url("${imageUrl}")`;
         document.body.classList.add('has-destination-bg');
@@ -192,12 +384,92 @@ function displaySafetyAssessment(data) {
     const badgeClass = data.level === 'safe' ? 'safe' : 'caution';
     const badgeText = data.level === 'safe' ? '✓ Safe to Visit' : '⚠ Exercise Caution';
 
+    // Build regional safety HTML if available
+    let regionalHTML = '';
+    if (data.regionalSafety) {
+        const regional = data.regionalSafety;
+
+        regionalHTML = `
+            <div class="regional-safety-section">
+                <h3 style="font-size: 1.5rem; margin-bottom: 20px; color: var(--text-dark); display: flex; align-items: center; gap: 10px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    Regional Safety Information
+                </h3>
+                <div class="regional-advice-box">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 16v-4"></path>
+                        <path d="M12 8h.01"></path>
+                    </svg>
+                    <p>${regional.generalAdvice}</p>
+                </div>
+
+                ${regional.safeRegions && regional.safeRegions.length > 0 ? `
+                    <div class="region-category safe-category">
+                        <h4 class="region-category-title safe-title">
+                            <span class="region-icon">✓</span>
+                            Safe Regions - Recommended for Tourists
+                        </h4>
+                        <div class="regions-grid">
+                            ${regional.safeRegions.map(region => `
+                                <div class="region-card safe-region">
+                                    <div class="region-name">${region.name}</div>
+                                    <div class="region-description">${region.description}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+
+                ${regional.cautionRegions && regional.cautionRegions.length > 0 ? `
+                    <div class="region-category caution-category">
+                        <h4 class="region-category-title caution-title">
+                            <span class="region-icon">⚠</span>
+                            Exercise Caution - Stay Alert in These Areas
+                        </h4>
+                        <div class="regions-grid">
+                            ${regional.cautionRegions.map(region => `
+                                <div class="region-card caution-region">
+                                    <div class="region-name">${region.name}</div>
+                                    <div class="region-description">${region.description}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+
+                ${regional.avoidRegions && regional.avoidRegions.length > 0 ? `
+                    <div class="region-category danger-category">
+                        <h4 class="region-category-title danger-title">
+                            <span class="region-icon">⛔</span>
+                            Avoid or Do Not Travel - High Risk Areas
+                        </h4>
+                        <div class="regions-grid">
+                            ${regional.avoidRegions.map(region => `
+                                <div class="region-card danger-region">
+                                    <div class="region-name">${region.name}</div>
+                                    <div class="region-level">${region.level}</div>
+                                    <div class="region-description">${region.description}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }
+
     container.innerHTML = `
         <div class="safety-badge ${badgeClass}">
             ${badgeText}
         </div>
         <div class="safety-score">${data.score}/100</div>
         <p class="safety-summary">${data.summary}</p>
+
+        ${regionalHTML}
 
         <h4 style="margin-bottom: 15px; color: var(--text-dark);">Important Considerations:</h4>
         <ul class="considerations-list">
