@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="19.2" fill="url(#grad)"/>
+
+  <!-- Globe icon -->
+  <circle cx="64" cy="64" r="38.4" stroke="white" stroke-width="5.12" fill="none"/>
+  <ellipse cx="64" cy="64" rx="16.64" ry="38.4" stroke="white" stroke-width="3.2" fill="none"/>
+  <line x1="25.6" y1="64" x2="102.4" y2="64" stroke="white" stroke-width="3.2"/>
+
+  <!-- Map pin -->
+  <path d="M 64 32
+           C 53.76 32, 48.64 37.12, 48.64 42.24
+           C 48.64 48.64, 64 61.44, 64 61.44
+           C 64 61.44, 79.36 48.64, 79.36 42.24
+           C 79.36 37.12, 74.24 32, 64 32 Z"
+           fill="white"/>
+  <circle cx="64" cy="42.24" r="2.56" fill="#667eea"/>
+</svg>

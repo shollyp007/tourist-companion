@@ -896,3 +896,64 @@ religionSelect.addEventListener('keypress', (e) => {
 destinationInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') handleSearch();
 });
+
+// ========================================
+// PWA Service Worker Registration
+// ========================================
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker
+            .register('/service-worker.js')
+            .then((registration) => {
+                console.log('✓ PWA: Service Worker registered successfully!');
+                console.log('✓ PWA: Your app can now be installed on devices');
+
+                // Check for updates
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            console.log('✓ PWA: New content available! Refresh to update.');
+
+                            // Optionally show a notification to the user
+                            if (confirm('New version available! Reload to update?')) {
+                                newWorker.postMessage({ type: 'SKIP_WAITING' });
+                                window.location.reload();
+                            }
+                        }
+                    });
+                });
+            })
+            .catch((error) => {
+                console.log('Service Worker registration failed:', error);
+            });
+
+        // Handle service worker updates
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (!refreshing) {
+                refreshing = true;
+                window.location.reload();
+            }
+        });
+    });
+
+    // Listen for installation prompt
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+
+        // Show custom install button or prompt
+        console.log('✓ PWA: App is installable!');
+        console.log('💡 On mobile: Tap the menu and select "Add to Home Screen"');
+        console.log('💡 On desktop: Look for the install icon in the address bar');
+    });
+
+    // Track installation
+    window.addEventListener('appinstalled', () => {
+        console.log('🎉 PWA: App successfully installed!');
+        deferredPrompt = null;
+    });
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="384" height="384" viewBox="0 0 384 384" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="384" height="384" rx="57.599999999999994" fill="url(#grad)"/>
+
+  <!-- Globe icon -->
+  <circle cx="192" cy="192" r="115.19999999999999" stroke="white" stroke-width="15.36" fill="none"/>
+  <ellipse cx="192" cy="192" rx="49.92" ry="115.19999999999999" stroke="white" stroke-width="9.600000000000001" fill="none"/>
+  <line x1="76.80000000000001" y1="192" x2="307.20000000000005" y2="192" stroke="white" stroke-width="9.600000000000001"/>
+
+  <!-- Map pin -->
+  <path d="M 192 96
+           C 161.28 96, 145.92000000000002 111.35999999999999, 145.92000000000002 126.72
+           C 145.92000000000002 145.92000000000002, 192 184.32, 192 184.32
+           C 192 184.32, 238.07999999999998 145.92000000000002, 238.07999999999998 126.72
+           C 238.07999999999998 111.35999999999999, 222.71999999999997 96, 192 96 Z"
+           fill="white"/>
+  <circle cx="192" cy="126.72" r="7.68" fill="#667eea"/>
+</svg>
