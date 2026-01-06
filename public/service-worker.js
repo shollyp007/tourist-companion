@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tourist-companion-v1';
+const CACHE_NAME = 'tourist-companion-v2';
 const urlsToCache = [
   '/',
   '/css/style.css',
@@ -46,18 +46,22 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  const url = new URL(event.request.url);
+
+  // Always fetch fresh for API calls and external resources (images from Unsplash, Google, etc.)
+  if (event.request.url.includes('/api/') ||
+      url.hostname !== self.location.hostname) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
+  // For local resources, try cache first, then network
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
         // Return cached version or fetch from network
         return response || fetch(event.request)
           .then((fetchResponse) => {
-            // Don't cache API calls or external resources
-            if (!event.request.url.startsWith(self.location.origin) ||
-                event.request.url.includes('/api/')) {
-              return fetchResponse;
-            }
-
             // Clone the response
             const responseToCache = fetchResponse.clone();
 
