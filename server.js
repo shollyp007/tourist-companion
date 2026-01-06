@@ -976,6 +976,16 @@ app.get('/api/adsense-config', (req, res) => {
     });
 });
 
+// Serve CSS files
+app.get('/css/:filename', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'css', req.params.filename));
+});
+
+// Serve JS files
+app.get('/js/:filename', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'js', req.params.filename));
+});
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
