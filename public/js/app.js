@@ -465,24 +465,24 @@ async function setDestinationBackground(country) {
             applyColorTheme(colors);
         }
 
-        // Set the background image with flag overlay
-        if (flagUrl) {
-            // Create a layered background with flag on top
-            document.body.style.backgroundImage = `
-                linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)),
-                url("${flagUrl}"),
-                url("${imageUrl}")
-            `;
-            document.body.style.backgroundSize = 'cover, 60% auto, cover';
-            document.body.style.backgroundPosition = 'center, center, center';
-            document.body.style.backgroundRepeat = 'no-repeat, no-repeat, no-repeat';
-            document.body.style.backgroundBlendMode = 'normal, overlay, normal';
-        } else {
-            // Fallback to just landscape if no flag found
-            document.body.style.backgroundImage = `url("${imageUrl}")`;
-        }
-
+        // Set the background image
+        document.body.style.backgroundImage = `url("${imageUrl}")`;
         document.body.classList.add('has-destination-bg');
+
+        // Display flag banner if flag is available
+        if (flagUrl) {
+            const flagBanner = document.getElementById('flagBanner');
+            const flagImage = document.getElementById('flagImage');
+            const destinationTitle = document.getElementById('destinationTitle');
+
+            if (flagBanner && flagImage && destinationTitle) {
+                flagImage.src = flagUrl;
+                flagImage.alt = `${country} Flag`;
+                destinationTitle.textContent = country;
+                flagBanner.style.display = 'block';
+                console.log(`🚩 Flag banner displayed for ${country}`);
+            }
+        }
 
         console.log(`🎨 Background successfully set for ${country}`);
     } catch (error) {
