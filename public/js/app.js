@@ -753,16 +753,21 @@ function openHotelBooking(index) {
     const destination = encodeURIComponent(country);
 
     // Build Expedia URL with affiliate ID if available
-    let expediaUrl = `https://www.expedia.com/Hotel-Search?destination=${destination}`;
+    let expediaUrl;
 
     if (expediaConfig && expediaConfig.hasAffiliateId) {
-        expediaUrl += `&affiliateid=${expediaConfig.affiliateId}`;
+        // Use Expedia's affiliate redirect link format
+        // This will redirect to Expedia with tracking
+        expediaUrl = `https://expedia.com/affiliates/expedia-home.${expediaConfig.affiliateId}`;
+    } else {
+        // Fallback to direct Expedia search
+        expediaUrl = `https://www.expedia.com/Hotel-Search?destination=${destination}`;
     }
 
     // Show options
     const choice = confirm(
         `${hotel.name}\n\nPrice: ${hotel.price}/night\nRating: ${hotel.rating}/5.0\n\n` +
-        `Click OK to search for hotels on Expedia\n` +
+        `Click OK to search for hotels on Expedia (${country})\n` +
         `Click Cancel to search on Google`
     );
 
