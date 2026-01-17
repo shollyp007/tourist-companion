@@ -382,10 +382,43 @@ function applyColorTheme(colors) {
     console.log('✅ Color theme applied successfully!');
 }
 
-// Set beautiful destination background image
+// Country name to ISO code mapping for flags
+function getCountryCode(countryName) {
+    const countryMap = {
+        'united states': 'us', 'usa': 'us', 'america': 'us',
+        'united kingdom': 'gb', 'uk': 'gb', 'britain': 'gb', 'england': 'gb',
+        'france': 'fr', 'germany': 'de', 'spain': 'es', 'italy': 'it',
+        'japan': 'jp', 'china': 'cn', 'india': 'in', 'brazil': 'br',
+        'canada': 'ca', 'australia': 'au', 'mexico': 'mx', 'russia': 'ru',
+        'south korea': 'kr', 'korea': 'kr', 'netherlands': 'nl', 'switzerland': 'ch',
+        'sweden': 'se', 'norway': 'no', 'denmark': 'dk', 'finland': 'fi',
+        'poland': 'pl', 'greece': 'gr', 'portugal': 'pt', 'austria': 'at',
+        'belgium': 'be', 'czech republic': 'cz', 'hungary': 'hu', 'ireland': 'ie',
+        'new zealand': 'nz', 'singapore': 'sg', 'thailand': 'th', 'malaysia': 'my',
+        'indonesia': 'id', 'philippines': 'ph', 'vietnam': 'vn', 'turkey': 'tr',
+        'south africa': 'za', 'egypt': 'eg', 'nigeria': 'ng', 'kenya': 'ke',
+        'morocco': 'ma', 'ghana': 'gh', 'argentina': 'ar', 'chile': 'cl',
+        'colombia': 'co', 'peru': 'pe', 'uae': 'ae', 'united arab emirates': 'ae',
+        'saudi arabia': 'sa', 'qatar': 'qa', 'israel': 'il', 'kuwait': 'kw'
+    };
+
+    const normalized = countryName.toLowerCase().trim();
+    return countryMap[normalized] || null;
+}
+
+// Set beautiful destination background image with flag overlay
 async function setDestinationBackground(country) {
     try {
-        console.log(`🎨 Loading background image for ${country}...`);
+        console.log(`🎨 Loading background for ${country}...`);
+
+        // Get country flag
+        const countryCode = getCountryCode(country);
+        let flagUrl = null;
+
+        if (countryCode) {
+            flagUrl = `https://flagcdn.com/w640/${countryCode}.png`;
+            console.log(`🚩 Flag URL: ${flagUrl}`);
+        }
 
         // Try multiple image sources for better reliability
         const imageSources = [
@@ -432,8 +465,23 @@ async function setDestinationBackground(country) {
             applyColorTheme(colors);
         }
 
-        // Set the background image with a smooth transition
-        document.body.style.backgroundImage = `url("${imageUrl}")`;
+        // Set the background image with flag overlay
+        if (flagUrl) {
+            // Create a layered background with flag on top
+            document.body.style.backgroundImage = `
+                linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)),
+                url("${flagUrl}"),
+                url("${imageUrl}")
+            `;
+            document.body.style.backgroundSize = 'cover, 60% auto, cover';
+            document.body.style.backgroundPosition = 'center, center, center';
+            document.body.style.backgroundRepeat = 'no-repeat, no-repeat, no-repeat';
+            document.body.style.backgroundBlendMode = 'normal, overlay, normal';
+        } else {
+            // Fallback to just landscape if no flag found
+            document.body.style.backgroundImage = `url("${imageUrl}")`;
+        }
+
         document.body.classList.add('has-destination-bg');
 
         console.log(`🎨 Background successfully set for ${country}`);
