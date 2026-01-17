@@ -977,6 +977,12 @@ app.get('/api/adsense-config', (req, res) => {
 });
 
 // Serve CSS files
+// Serve ads.txt for Google AdSense
+app.get('/ads.txt', (req, res) => {
+    res.type('text/plain');
+    res.sendFile(path.join(__dirname, 'public', 'ads.txt'));
+});
+
 app.get('/css/:filename', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'css', req.params.filename));
 });
