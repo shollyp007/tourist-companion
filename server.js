@@ -13,7 +13,7 @@ const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 const GOOGLE_SEARCH_ENGINE_ID = process.env.GOOGLE_SEARCH_ENGINE_ID;
 const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
 const NEWS_API_KEY = process.env.NEWS_API_KEY;
-const BOOKING_AFFILIATE_ID = process.env.BOOKING_AFFILIATE_ID;
+const EXPEDIA_AFFILIATE_ID = process.env.EXPEDIA_AFFILIATE_ID;
 const ADSENSE_PUBLISHER_ID = process.env.ADSENSE_PUBLISHER_ID;
 const ADSENSE_AD_SLOT_ID = process.env.ADSENSE_AD_SLOT_ID;
 
@@ -956,11 +956,11 @@ app.get('/api/emergency-info', async (req, res) => {
     }
 });
 
-// Booking.com Affiliate Configuration
-app.get('/api/booking-config', (req, res) => {
+// Expedia Affiliate Configuration
+app.get('/api/expedia-config', (req, res) => {
     res.json({
-        affiliateId: BOOKING_AFFILIATE_ID || null,
-        hasAffiliateId: BOOKING_AFFILIATE_ID && BOOKING_AFFILIATE_ID !== 'your_booking_affiliate_id_here'
+        affiliateId: EXPEDIA_AFFILIATE_ID || null,
+        hasAffiliateId: EXPEDIA_AFFILIATE_ID && EXPEDIA_AFFILIATE_ID !== 'your_expedia_affiliate_id_here'
     });
 });
 

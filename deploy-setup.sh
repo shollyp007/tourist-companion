@@ -44,7 +44,7 @@ git add .
 
 # Create initial commit
 echo "💾 Creating initial commit..."
-git commit -m "Initial commit - Tourist Companion app with Booking.com affiliate support"
+git commit -m "Initial commit - Tourist Companion app with Expedia affiliate support"
 
 echo ""
 echo "✅ Git repository initialized successfully!"

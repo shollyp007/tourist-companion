@@ -105,29 +105,30 @@ The News API provides real-time news articles for safety assessments and travel 
 
 ---
 
-## 4. Booking.com Affiliate Program (Optional)
+## 4. Expedia Affiliate Program - TAAP (Optional)
 
-The Booking.com Affiliate Program allows you to earn commission when users book hotels through your links.
+The Expedia Affiliate Program (TAAP) allows you to earn 4-6% commission when users book hotels through your links. TAAP includes Expedia, Hotels.com, Vrbo, and other brands.
 
-### Steps to Get Booking.com Affiliate ID:
+### Steps to Get Expedia Affiliate ID:
 
-1. **Join Booking.com Partner Program**
-   - Go to [Booking.com Affiliate Program](https://www.booking.com/affiliate-program/v2/index.html)
-   - Click "Join Now" or "Sign Up"
+1. **Join Expedia Affiliate Program**
+   - Go to [Expedia Affiliate Program](https://welcome.expediagroup.com/en/affiliate)
+   - Click "Join Now" or "Apply Now"
    - Fill in your details and website information
+   - Easier approval process than Booking.com
 
 2. **Get Your Affiliate ID**
-   - After approval, log in to your partner dashboard
-   - Navigate to "Links & Banners" or "Tools"
-   - Find your Affiliate ID (also called "aid" parameter)
+   - After approval, log in to your TAAP dashboard
+   - Navigate to "Tools" or "Links"
+   - Find your Affiliate ID (numeric value)
    - It's usually a numeric value like "123456"
 
 3. **Add to .env File**
    ```env
-   BOOKING_AFFILIATE_ID=your_affiliate_id_here
+   EXPEDIA_AFFILIATE_ID=your_affiliate_id_here
    ```
 
-**Cost:** Free to join. You earn commission on bookings made through your links.
+**Cost:** Free to join. You earn 4-6% commission on bookings made through your links.
 
 ---
 
@@ -146,8 +147,8 @@ UNSPLASH_ACCESS_KEY=abcdefghijklmnopqrstuvwxyz123456789
 # News API
 NEWS_API_KEY=1234567890abcdef1234567890abcdef
 
-# Booking.com Affiliate ID (Optional)
-BOOKING_AFFILIATE_ID=123456
+# Expedia Affiliate ID (Optional)
+EXPEDIA_AFFILIATE_ID=123456
 
 # Server Configuration
 PORT=3001
@@ -228,7 +229,7 @@ The experience is still great for testing and demonstration purposes.
 | Google Custom Search | 100 queries | Per day | - |
 | Unsplash | 50 requests | Per hour | - |
 | News API | 100 requests | Per day | - |
-| Booking.com Affiliate | Unlimited | - | Optional, earns commission |
+| Expedia Affiliate (TAAP) | Unlimited | - | Optional, earns 4-6% commission |
 
 **Tip:** For production use, consider upgrading to paid plans for higher limits and better reliability.
 

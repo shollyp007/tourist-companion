@@ -9,7 +9,7 @@ let userData = {
 };
 
 let emergencyData = null;
-let bookingConfig = null;
+let expediaConfig = null;
 let adsenseConfig = null;
 
 // DOM Elements
@@ -29,14 +29,14 @@ const emergencyBtn = document.getElementById('emergencyBtn');
 const emergencyModal = document.getElementById('emergencyModal');
 const closeModal = document.querySelector('.close');
 
-// Load Booking.com affiliate configuration on page load
-async function loadBookingConfig() {
+// Load Expedia affiliate configuration on page load
+async function loadExpediaConfig() {
     try {
-        const response = await fetch('/api/booking-config');
-        bookingConfig = await response.json();
+        const response = await fetch('/api/expedia-config');
+        expediaConfig = await response.json();
     } catch (error) {
-        console.error('Error loading booking config:', error);
-        bookingConfig = { affiliateId: null, hasAffiliateId: false };
+        console.error('Error loading Expedia config:', error);
+        expediaConfig = { affiliateId: null, hasAffiliateId: false };
     }
 }
 
@@ -106,7 +106,7 @@ function initializeAdSense() {
 }
 
 // Event Listeners
-loadBookingConfig(); // Load affiliate config when page loads
+loadExpediaConfig(); // Load affiliate config when page loads
 loadAdSenseConfig(); // Load AdSense config when page loads
 getStartedBtn.addEventListener('click', handleGetStarted);
 searchBtn.addEventListener('click', handleSearch);
@@ -750,24 +750,25 @@ function openHotelBooking(index) {
 
     // Create search query for hotel booking sites
     const hotelSearchQuery = encodeURIComponent(`${hotel.name} ${country}`);
+    const destination = encodeURIComponent(country);
 
-    // Build Booking.com URL with affiliate ID if available
-    let bookingUrl = `https://www.booking.com/searchresults.html?ss=${hotelSearchQuery}`;
+    // Build Expedia URL with affiliate ID if available
+    let expediaUrl = `https://www.expedia.com/Hotel-Search?destination=${destination}`;
 
-    if (bookingConfig && bookingConfig.hasAffiliateId) {
-        bookingUrl += `&aid=${bookingConfig.affiliateId}`;
+    if (expediaConfig && expediaConfig.hasAffiliateId) {
+        expediaUrl += `&affiliateid=${expediaConfig.affiliateId}`;
     }
 
     // Show options
     const choice = confirm(
         `${hotel.name}\n\nPrice: ${hotel.price}/night\nRating: ${hotel.rating}/5.0\n\n` +
-        `Click OK to search for this hotel on Booking.com\n` +
+        `Click OK to search for hotels on Expedia\n` +
         `Click Cancel to search on Google`
     );
 
     if (choice) {
-        // Open Booking.com search with affiliate link
-        window.open(bookingUrl, '_blank');
+        // Open Expedia search with affiliate link
+        window.open(expediaUrl, '_blank');
     } else {
         // Open Google search
         window.open(`https://www.google.com/search?q=${hotelSearchQuery}+hotel+booking`, '_blank');

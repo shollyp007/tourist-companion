@@ -8,7 +8,7 @@ A comprehensive travel guide application that provides tourists with real-time i
 - **Live Destination Search**: Real-time tourist attractions and information
 - **Safety Assessment**: Security analysis based on current news and citizenship
 - **Cost Estimates**: Detailed breakdown of accommodation, food, and transportation costs
-- **Hotel Recommendations**: Browse hotels with Booking.com affiliate integration
+- **Hotel Recommendations**: Browse hotels with Expedia affiliate integration
 - **Emergency Contacts**: Local emergency numbers and embassy information for 50+ countries
 - **Ad Monetization**: Google AdSense integration ready for revenue generation
 - **Beautiful UI**: Modern gradient design with smooth animations
@@ -65,7 +65,7 @@ The application will be available at `http://localhost:3001`
 
 ## Deploy to Production
 
-Want to publish your app online and apply for the Booking.com affiliate program?
+Want to publish your app online and apply for the Expedia affiliate program?
 
 See the **[DEPLOYMENT.md](./DEPLOYMENT.md)** guide for step-by-step instructions to deploy to:
 - **Vercel** (Recommended - Easiest)

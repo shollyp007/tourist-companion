@@ -35,13 +35,13 @@ git push -u origin main
 7. Wait 2 minutes
 8. Get your URL: `https://tourist-companion-xxx.vercel.app`
 
-### Step 5: Apply for Booking.com Affiliate
-1. Go to https://www.booking.com/affiliate-program/v2/index.html
-2. Click "Join Now"
+### Step 5: Apply for Expedia Affiliate (TAAP)
+1. Go to https://welcome.expediagroup.com/en/affiliate
+2. Click "Apply Now"
 3. Enter your Vercel URL as website
-4. Wait 1-3 days for approval
+4. Wait 1-3 days for approval (easier than Booking.com)
 5. Get your affiliate ID
-6. Add to Vercel environment variables: `BOOKING_AFFILIATE_ID=123456`
+6. Add to Vercel environment variables: `EXPEDIA_AFFILIATE_ID=123456`
 
 ## Done! 🎉
 

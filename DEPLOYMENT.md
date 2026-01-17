@@ -1,6 +1,6 @@
 # Deployment Guide for Tourist Companion
 
-This guide will help you deploy the Tourist Companion app to the internet so you can apply for the Booking.com affiliate program and start earning commissions.
+This guide will help you deploy the Tourist Companion app to the internet so you can apply for the Expedia affiliate program (TAAP) and start earning commissions.
 
 ## Prerequisites
 
@@ -176,27 +176,27 @@ Visit your deployed URL and test:
 - ✅ Click emergency button
 - ✅ Try clicking on a hotel card
 
-### 2. Apply for Booking.com Affiliate Program
+### 2. Apply for Expedia Affiliate Program (TAAP)
 
 Now that your app is live:
 
-1. **Go to Booking.com Affiliate Program**
-   - Visit: [https://www.booking.com/affiliate-program/v2/index.html](https://www.booking.com/affiliate-program/v2/index.html)
-   - Click "Join Now"
+1. **Go to Expedia Affiliate Program**
+   - Visit: [https://welcome.expediagroup.com/en/affiliate](https://welcome.expediagroup.com/en/affiliate)
+   - Click "Apply Now" or "Join Now"
 
 2. **Fill in application**
    - Website URL: Your deployed app URL (e.g., `https://tourist-companion.vercel.app`)
-   - Website Description: "Travel companion app providing tourists with destination information, safety assessments, cost estimates, and hotel recommendations"
+   - Website Description: "Travel companion app providing tourists with destination information, safety assessments, cost estimates, and hotel recommendations via Expedia"
    - Traffic Source: "Organic/Direct"
    - Monthly Visitors: "0-1000" (you're just starting)
 
 3. **Wait for approval**
-   - Usually takes 1-3 business days
+   - Usually takes 1-3 business days (easier approval than Booking.com)
    - You'll receive an email with your decision
 
 4. **Get your Affiliate ID**
-   - Once approved, log into your Booking.com partner dashboard
-   - Find your Affiliate ID (also called "aid")
+   - Once approved, log into your Expedia TAAP dashboard
+   - Find your Affiliate ID (numeric value)
    - It's usually a numeric value like `123456`
 
 ### 3. Add Your Affiliate ID
@@ -206,21 +206,21 @@ Once you have your affiliate ID:
 **For Vercel:**
 1. Go to your project dashboard
 2. Click "Settings" → "Environment Variables"
-3. Add: `BOOKING_AFFILIATE_ID` = `your_affiliate_id_here`
+3. Add: `EXPEDIA_AFFILIATE_ID` = `your_affiliate_id_here`
 4. Click "Save"
 5. Go to "Deployments" and redeploy
 
 **For Render:**
 1. Go to your service dashboard
 2. Click "Environment"
-3. Add: `BOOKING_AFFILIATE_ID` = `your_affiliate_id_here`
+3. Add: `EXPEDIA_AFFILIATE_ID` = `your_affiliate_id_here`
 4. Click "Save Changes"
 5. Service will automatically redeploy
 
 **For Railway:**
 1. Go to your service
 2. Click "Variables" tab
-3. Add: `BOOKING_AFFILIATE_ID` = `your_affiliate_id_here`
+3. Add: `EXPEDIA_AFFILIATE_ID` = `your_affiliate_id_here`
 4. Service will automatically redeploy
 
 ### 4. Verify Affiliate Links Work
@@ -228,12 +228,12 @@ Once you have your affiliate ID:
 1. Visit your deployed app
 2. Search for a destination
 3. Click on a hotel card
-4. Click "OK" to search on Booking.com
-5. Check the URL - it should contain `&aid=YOUR_AFFILIATE_ID`
+4. Click "OK" to search on Expedia
+5. Check the URL - it should contain `&affiliateid=YOUR_AFFILIATE_ID`
 
 Example:
 ```
-https://www.booking.com/searchresults.html?ss=Hotel+Name+Paris&aid=123456
+https://www.expedia.com/Hotel-Search?destination=Paris&affiliateid=123456
 ```
 
 ---
@@ -250,7 +250,7 @@ https://www.booking.com/searchresults.html?ss=Hotel+Name+Paris&aid=123456
 - The app works without API keys but shows generic hotels
 
 ### Affiliate links not working
-- Verify `BOOKING_AFFILIATE_ID` is set in environment variables
+- Verify `EXPEDIA_AFFILIATE_ID` is set in environment variables
 - Make sure you redeployed after adding the affiliate ID
 - Check the console for any JavaScript errors
 
@@ -298,10 +298,10 @@ Want a custom domain like `touristcompanion.com`?
 
 1. ✅ Deploy your app using one of the methods above
 2. ✅ Test your live app thoroughly
-3. ✅ Apply for Booking.com affiliate program with your live URL
+3. ✅ Apply for Expedia affiliate program (TAAP) with your live URL
 4. ✅ Wait for approval (1-3 days)
 5. ✅ Add affiliate ID to environment variables
-6. ✅ Start earning commissions on hotel bookings!
+6. ✅ Start earning 4-6% commissions on hotel bookings!
 
 ---
 
@@ -310,6 +310,6 @@ Want a custom domain like `touristcompanion.com`?
 - **Vercel Issues**: [Vercel Discord](https://vercel.com/discord)
 - **Render Issues**: [Render Community](https://community.render.com/)
 - **Railway Issues**: [Railway Discord](https://discord.gg/railway)
-- **Booking.com Affiliate**: [Partner Support](https://partner.booking.com/en-gb/help)
+- **Expedia Affiliate**: [Expedia Affiliate Support](https://welcome.expediagroup.com/en/affiliate)
 
 Good luck with your deployment and affiliate application!
