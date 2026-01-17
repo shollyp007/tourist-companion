@@ -749,7 +749,6 @@ function openHotelBooking(index) {
     const country = userData.destination;
 
     // Create search query for hotel booking sites
-    const hotelSearchQuery = encodeURIComponent(`${hotel.name} ${country}`);
     const destination = encodeURIComponent(country);
 
     // Build Expedia URL with affiliate ID if available
@@ -764,20 +763,8 @@ function openHotelBooking(index) {
         expediaUrl = `https://www.expedia.com/Hotel-Search?destination=${destination}`;
     }
 
-    // Show options
-    const choice = confirm(
-        `${hotel.name}\n\nPrice: ${hotel.price}/night\nRating: ${hotel.rating}/5.0\n\n` +
-        `Click OK to search for hotels on Expedia (${country})\n` +
-        `Click Cancel to search on Google`
-    );
-
-    if (choice) {
-        // Open Expedia search with affiliate link
-        window.open(expediaUrl, '_blank');
-    } else {
-        // Open Google search
-        window.open(`https://www.google.com/search?q=${hotelSearchQuery}+hotel+booking`, '_blank');
-    }
+    // Redirect directly to Expedia - no confirmation needed for better UX
+    window.open(expediaUrl, '_blank');
 }
 
 // Show Emergency Modal
