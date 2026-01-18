@@ -27,6 +27,28 @@ console.log('- Google Search:', hasGoogleAPI ? '✓ Configured' : '✗ Not confi
 console.log('- Unsplash:', hasUnsplashAPI ? '✓ Configured' : '✗ Not configured (using Unsplash fallback)');
 console.log('- News API:', hasNewsAPI ? '✓ Configured' : '✗ Not configured (using simulated data)');
 
+// Simple in-memory cache to reduce API calls
+const cache = {
+    attractions: new Map(),
+    images: new Map(),
+    news: new Map()
+};
+const CACHE_TTL = 60 * 60 * 1000; // 1 hour cache
+
+function getCached(cacheMap, key) {
+    const item = cacheMap.get(key);
+    if (item && Date.now() - item.timestamp < CACHE_TTL) {
+        console.log(`📦 Cache hit for: ${key}`);
+        return item.data;
+    }
+    return null;
+}
+
+function setCache(cacheMap, key, data) {
+    cacheMap.set(key, { data, timestamp: Date.now() });
+    console.log(`💾 Cached: ${key}`);
+}
+
 // Emergency contacts database
 const emergencyContacts = {
     "United States": { police: "911", ambulance: "911", fire: "911" },
@@ -616,6 +638,13 @@ async function getHotelsWithImages(country, baseRate) {
 // API Routes
 app.get('/api/search-destinations', async (req, res) => {
     const { country, citizenship } = req.query;
+    const cacheKey = `attractions-${country.toLowerCase()}`;
+
+    // Check cache first
+    const cachedResults = getCached(cache.attractions, cacheKey);
+    if (cachedResults) {
+        return res.json(cachedResults);
+    }
 
     try {
         let results = [];
@@ -707,6 +736,9 @@ app.get('/api/search-destinations', async (req, res) => {
             totalResults: results.length,
             dataSource: hasGoogleAPI ? 'Google Search API' : 'Simulated Data'
         };
+
+        // Cache the results
+        setCache(cache.attractions, cacheKey, destinations);
 
         res.json(destinations);
     } catch (error) {
