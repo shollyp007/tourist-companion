@@ -323,8 +323,9 @@ async function getUnsplashImage(query, width = 800, height = 600) {
             console.error('Unsplash API error:', error.message);
         }
     }
-    // Fallback to Unsplash source
-    return `https://source.unsplash.com/${width}x${height}/?${encodeURIComponent(query)}`;
+    // Fallback to picsum.photos (more reliable than source.unsplash.com)
+    const seed = query.replace(/\s+/g, '-').toLowerCase();
+    return `https://picsum.photos/seed/${encodeURIComponent(seed)}/${width}/${height}`;
 }
 
 // Helper function to search with Google Custom Search
