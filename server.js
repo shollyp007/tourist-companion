@@ -333,7 +333,60 @@ const regionalSafety = {
 };
 
 // Helper function to fetch images from Unsplash
+// Curated travel images from Unsplash CDN (reliable direct links)
+const travelImages = {
+    landmark: [
+        'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80', // Paris Eiffel
+        'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&q=80', // London
+        'https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?w=800&q=80', // NYC
+        'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=800&q=80', // Venice
+        'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800&q=80', // Rome
+    ],
+    attractions: [
+        'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=800&q=80', // Paris
+        'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800&q=80', // Germany
+        'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800&q=80', // Japan
+        'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=800&q=80', // Sydney
+        'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=800&q=80', // Dubai
+    ],
+    cultural: [
+        'https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=800&q=80', // Museum
+        'https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=800&q=80', // Temple
+        'https://images.unsplash.com/photo-1544413660-299165566b1d?w=800&q=80', // Art
+        'https://images.unsplash.com/photo-1569317002804-ab77bcf1bce4?w=800&q=80', // Architecture
+    ],
+    nature: [
+        'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80', // Mountains
+        'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80', // Beach
+        'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=800&q=80', // Waterfall
+        'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80', // Forest
+    ],
+    food: [
+        'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80', // Restaurant
+        'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80', // Food
+        'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80', // Dining
+    ],
+    hotel: [
+        'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80', // Resort
+        'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=80', // Hotel
+        'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80', // Pool
+        'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=800&q=80', // Lobby
+        'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80', // Room
+    ]
+};
+
+function getCategoryFromQuery(query) {
+    const q = query.toLowerCase();
+    if (q.includes('hotel') || q.includes('resort') || q.includes('room') || q.includes('accommodation')) return 'hotel';
+    if (q.includes('food') || q.includes('restaurant') || q.includes('dining') || q.includes('cuisine')) return 'food';
+    if (q.includes('nature') || q.includes('park') || q.includes('mountain') || q.includes('beach') || q.includes('landscape')) return 'nature';
+    if (q.includes('museum') || q.includes('culture') || q.includes('art') || q.includes('temple') || q.includes('heritage')) return 'cultural';
+    if (q.includes('landmark') || q.includes('monument') || q.includes('famous')) return 'landmark';
+    return 'attractions';
+}
+
 async function getUnsplashImage(query, width = 800, height = 600) {
+    // Try Unsplash API first if configured
     if (hasUnsplashAPI) {
         try {
             const response = await axios.get('https://api.unsplash.com/photos/random', {
@@ -345,8 +398,16 @@ async function getUnsplashImage(query, width = 800, height = 600) {
             console.error('Unsplash API error:', error.message);
         }
     }
-    // Fallback to Unsplash source - shows relevant images based on query
-    return `https://source.unsplash.com/${width}x${height}/?${encodeURIComponent(query)}`;
+
+    // Use curated travel images as fallback
+    const category = getCategoryFromQuery(query);
+    const images = travelImages[category] || travelImages.attractions;
+
+    // Use query hash to get consistent image for same query
+    const hash = query.split('').reduce((a, b) => ((a << 5) - a + b.charCodeAt(0)) | 0, 0);
+    const index = Math.abs(hash) % images.length;
+
+    return images[index];
 }
 
 // Helper function to search with Google Custom Search
