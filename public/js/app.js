@@ -382,113 +382,241 @@ function applyColorTheme(colors) {
     console.log('✅ Color theme applied successfully!');
 }
 
-// Country name to ISO code mapping for flags
+// Country name to ISO code mapping for flags (comprehensive list)
 function getCountryCode(countryName) {
     const countryMap = {
-        'united states': 'us', 'usa': 'us', 'america': 'us',
-        'united kingdom': 'gb', 'uk': 'gb', 'britain': 'gb', 'england': 'gb',
+        // Popular Cities -> Country codes
+        'paris': 'fr', 'marseille': 'fr', 'lyon': 'fr', 'nice': 'fr',
+        'london': 'gb', 'manchester': 'gb', 'birmingham': 'gb', 'edinburgh': 'gb', 'glasgow': 'gb',
+        'new york': 'us', 'los angeles': 'us', 'chicago': 'us', 'miami': 'us', 'las vegas': 'us',
+        'san francisco': 'us', 'washington': 'us', 'boston': 'us', 'seattle': 'us', 'houston': 'us',
+        'toronto': 'ca', 'vancouver': 'ca', 'montreal': 'ca', 'calgary': 'ca',
+        'sydney': 'au', 'melbourne': 'au', 'brisbane': 'au', 'perth': 'au',
+        'tokyo': 'jp', 'osaka': 'jp', 'kyoto': 'jp', 'yokohama': 'jp',
+        'beijing': 'cn', 'shanghai': 'cn', 'guangzhou': 'cn', 'shenzhen': 'cn', 'hong kong': 'hk',
+        'berlin': 'de', 'munich': 'de', 'frankfurt': 'de', 'hamburg': 'de', 'cologne': 'de',
+        'rome': 'it', 'milan': 'it', 'venice': 'it', 'florence': 'it', 'naples': 'it',
+        'madrid': 'es', 'barcelona': 'es', 'seville': 'es', 'valencia': 'es',
+        'amsterdam': 'nl', 'rotterdam': 'nl', 'the hague': 'nl',
+        'lisbon': 'pt', 'porto': 'pt',
+        'vienna': 'at', 'salzburg': 'at',
+        'zurich': 'ch', 'geneva': 'ch', 'bern': 'ch',
+        'brussels': 'be', 'antwerp': 'be',
+        'stockholm': 'se', 'gothenburg': 'se',
+        'oslo': 'no', 'bergen': 'no',
+        'copenhagen': 'dk',
+        'helsinki': 'fi',
+        'dublin': 'ie', 'cork': 'ie',
+        'athens': 'gr', 'santorini': 'gr', 'mykonos': 'gr',
+        'istanbul': 'tr', 'ankara': 'tr', 'antalya': 'tr',
+        'moscow': 'ru', 'st petersburg': 'ru', 'saint petersburg': 'ru',
+        'warsaw': 'pl', 'krakow': 'pl', 'gdansk': 'pl',
+        'prague': 'cz',
+        'budapest': 'hu',
+        'bucharest': 'ro',
+        'bangkok': 'th', 'phuket': 'th', 'chiang mai': 'th', 'pattaya': 'th',
+        'singapore city': 'sg',
+        'kuala lumpur': 'my', 'penang': 'my',
+        'jakarta': 'id', 'bali': 'id', 'denpasar': 'id',
+        'manila': 'ph', 'cebu': 'ph',
+        'ho chi minh': 'vn', 'hanoi': 'vn', 'saigon': 'vn', 'da nang': 'vn',
+        'mumbai': 'in', 'delhi': 'in', 'new delhi': 'in', 'bangalore': 'in', 'goa': 'in', 'jaipur': 'in',
+        'seoul': 'kr', 'busan': 'kr',
+        'dubai': 'ae', 'abu dhabi': 'ae',
+        'doha': 'qa',
+        'riyadh': 'sa', 'jeddah': 'sa', 'mecca': 'sa',
+        'tel aviv': 'il', 'jerusalem': 'il',
+        'cairo': 'eg', 'luxor': 'eg', 'alexandria': 'eg',
+        'marrakech': 'ma', 'casablanca': 'ma', 'fez': 'ma',
+        'cape town': 'za', 'johannesburg': 'za', 'durban': 'za',
+        'lagos': 'ng', 'abuja': 'ng',
+        'nairobi': 'ke', 'mombasa': 'ke',
+        'accra': 'gh',
+        'rio de janeiro': 'br', 'rio': 'br', 'sao paulo': 'br', 'salvador': 'br',
+        'buenos aires': 'ar', 'mendoza': 'ar',
+        'santiago': 'cl',
+        'lima': 'pe', 'cusco': 'pe', 'machu picchu': 'pe',
+        'bogota': 'co', 'medellin': 'co', 'cartagena': 'co',
+        'mexico city': 'mx', 'cancun': 'mx', 'playa del carmen': 'mx', 'tulum': 'mx',
+        'havana': 'cu',
+        'san juan': 'pr',
+        'auckland': 'nz', 'wellington': 'nz', 'queenstown': 'nz',
+
+        // North America
+        'united states': 'us', 'usa': 'us', 'america': 'us', 'united states of america': 'us',
+        'canada': 'ca', 'mexico': 'mx',
+
+        // Central America & Caribbean
+        'guatemala': 'gt', 'belize': 'bz', 'honduras': 'hn', 'el salvador': 'sv',
+        'nicaragua': 'ni', 'costa rica': 'cr', 'panama': 'pa',
+        'cuba': 'cu', 'jamaica': 'jm', 'haiti': 'ht', 'dominican republic': 'do',
+        'puerto rico': 'pr', 'bahamas': 'bs', 'barbados': 'bb', 'trinidad and tobago': 'tt',
+        'trinidad': 'tt', 'aruba': 'aw', 'curacao': 'cw',
+
+        // South America
+        'brazil': 'br', 'argentina': 'ar', 'chile': 'cl', 'colombia': 'co',
+        'peru': 'pe', 'venezuela': 've', 'ecuador': 'ec', 'bolivia': 'bo',
+        'paraguay': 'py', 'uruguay': 'uy', 'guyana': 'gy', 'suriname': 'sr',
+
+        // Western Europe
+        'united kingdom': 'gb', 'uk': 'gb', 'britain': 'gb', 'england': 'gb', 'great britain': 'gb',
+        'scotland': 'gb', 'wales': 'gb', 'northern ireland': 'gb',
         'france': 'fr', 'germany': 'de', 'spain': 'es', 'italy': 'it',
-        'japan': 'jp', 'china': 'cn', 'india': 'in', 'brazil': 'br',
-        'canada': 'ca', 'australia': 'au', 'mexico': 'mx', 'russia': 'ru',
-        'south korea': 'kr', 'korea': 'kr', 'netherlands': 'nl', 'switzerland': 'ch',
+        'portugal': 'pt', 'netherlands': 'nl', 'holland': 'nl', 'belgium': 'be',
+        'luxembourg': 'lu', 'switzerland': 'ch', 'austria': 'at', 'ireland': 'ie',
+        'monaco': 'mc', 'andorra': 'ad', 'liechtenstein': 'li', 'san marino': 'sm',
+        'vatican': 'va', 'vatican city': 'va', 'malta': 'mt',
+
+        // Northern Europe
         'sweden': 'se', 'norway': 'no', 'denmark': 'dk', 'finland': 'fi',
-        'poland': 'pl', 'greece': 'gr', 'portugal': 'pt', 'austria': 'at',
-        'belgium': 'be', 'czech republic': 'cz', 'hungary': 'hu', 'ireland': 'ie',
-        'new zealand': 'nz', 'singapore': 'sg', 'thailand': 'th', 'malaysia': 'my',
-        'indonesia': 'id', 'philippines': 'ph', 'vietnam': 'vn', 'turkey': 'tr',
-        'south africa': 'za', 'egypt': 'eg', 'nigeria': 'ng', 'kenya': 'ke',
-        'morocco': 'ma', 'ghana': 'gh', 'argentina': 'ar', 'chile': 'cl',
-        'colombia': 'co', 'peru': 'pe', 'uae': 'ae', 'united arab emirates': 'ae',
-        'saudi arabia': 'sa', 'qatar': 'qa', 'israel': 'il', 'kuwait': 'kw'
+        'iceland': 'is', 'greenland': 'gl', 'faroe islands': 'fo',
+
+        // Eastern Europe
+        'poland': 'pl', 'czech republic': 'cz', 'czechia': 'cz', 'slovakia': 'sk',
+        'hungary': 'hu', 'romania': 'ro', 'bulgaria': 'bg', 'ukraine': 'ua',
+        'belarus': 'by', 'moldova': 'md', 'russia': 'ru', 'russian federation': 'ru',
+
+        // Balkans & Southeast Europe
+        'greece': 'gr', 'turkey': 'tr', 'croatia': 'hr', 'slovenia': 'si',
+        'serbia': 'rs', 'bosnia': 'ba', 'bosnia and herzegovina': 'ba',
+        'montenegro': 'me', 'north macedonia': 'mk', 'macedonia': 'mk',
+        'albania': 'al', 'kosovo': 'xk', 'cyprus': 'cy',
+
+        // Baltic States
+        'estonia': 'ee', 'latvia': 'lv', 'lithuania': 'lt',
+
+        // East Asia
+        'japan': 'jp', 'china': 'cn', 'south korea': 'kr', 'korea': 'kr',
+        'north korea': 'kp', 'taiwan': 'tw', 'hong kong': 'hk', 'macau': 'mo',
+        'mongolia': 'mn',
+
+        // Southeast Asia
+        'thailand': 'th', 'vietnam': 'vn', 'malaysia': 'my', 'singapore': 'sg',
+        'indonesia': 'id', 'philippines': 'ph', 'myanmar': 'mm', 'burma': 'mm',
+        'cambodia': 'kh', 'laos': 'la', 'brunei': 'bn', 'timor-leste': 'tl',
+        'east timor': 'tl',
+
+        // South Asia
+        'india': 'in', 'pakistan': 'pk', 'bangladesh': 'bd', 'sri lanka': 'lk',
+        'nepal': 'np', 'bhutan': 'bt', 'maldives': 'mv', 'afghanistan': 'af',
+
+        // Central Asia
+        'kazakhstan': 'kz', 'uzbekistan': 'uz', 'turkmenistan': 'tm',
+        'kyrgyzstan': 'kg', 'tajikistan': 'tj',
+
+        // Middle East
+        'uae': 'ae', 'united arab emirates': 'ae', 'dubai': 'ae', 'abu dhabi': 'ae',
+        'saudi arabia': 'sa', 'qatar': 'qa', 'kuwait': 'kw', 'bahrain': 'bh',
+        'oman': 'om', 'yemen': 'ye', 'iraq': 'iq', 'iran': 'ir',
+        'israel': 'il', 'palestine': 'ps', 'jordan': 'jo', 'lebanon': 'lb',
+        'syria': 'sy',
+
+        // North Africa
+        'egypt': 'eg', 'morocco': 'ma', 'algeria': 'dz', 'tunisia': 'tn',
+        'libya': 'ly', 'sudan': 'sd', 'south sudan': 'ss',
+
+        // West Africa
+        'nigeria': 'ng', 'ghana': 'gh', 'senegal': 'sn', 'ivory coast': 'ci',
+        'cote d\'ivoire': 'ci', 'cameroon': 'cm', 'mali': 'ml', 'burkina faso': 'bf',
+        'niger': 'ne', 'guinea': 'gn', 'benin': 'bj', 'togo': 'tg',
+        'sierra leone': 'sl', 'liberia': 'lr', 'mauritania': 'mr', 'gambia': 'gm',
+        'guinea-bissau': 'gw', 'cape verde': 'cv',
+
+        // East Africa
+        'kenya': 'ke', 'tanzania': 'tz', 'uganda': 'ug', 'ethiopia': 'et',
+        'rwanda': 'rw', 'burundi': 'bi', 'somalia': 'so', 'eritrea': 'er',
+        'djibouti': 'dj', 'seychelles': 'sc', 'mauritius': 'mu', 'madagascar': 'mg',
+        'comoros': 'km', 'mayotte': 'yt', 'reunion': 're',
+
+        // Central Africa
+        'democratic republic of congo': 'cd', 'drc': 'cd', 'congo': 'cg',
+        'republic of congo': 'cg', 'gabon': 'ga', 'equatorial guinea': 'gq',
+        'central african republic': 'cf', 'chad': 'td', 'angola': 'ao',
+        'zambia': 'zm', 'zimbabwe': 'zw', 'malawi': 'mw',
+
+        // Southern Africa
+        'south africa': 'za', 'namibia': 'na', 'botswana': 'bw', 'mozambique': 'mz',
+        'lesotho': 'ls', 'eswatini': 'sz', 'swaziland': 'sz',
+
+        // Oceania
+        'australia': 'au', 'new zealand': 'nz', 'fiji': 'fj', 'papua new guinea': 'pg',
+        'samoa': 'ws', 'tonga': 'to', 'vanuatu': 'vu', 'solomon islands': 'sb',
+        'micronesia': 'fm', 'palau': 'pw', 'marshall islands': 'mh', 'kiribati': 'ki',
+        'nauru': 'nr', 'tuvalu': 'tv', 'guam': 'gu', 'french polynesia': 'pf',
+        'tahiti': 'pf', 'new caledonia': 'nc', 'hawaii': 'us'
     };
 
     const normalized = countryName.toLowerCase().trim();
     return countryMap[normalized] || null;
 }
 
-// Set beautiful destination background image with flag overlay
+// Display the country flag as page background
+function displayCountryFlag(country) {
+    const countryCode = getCountryCode(country);
+
+    if (!countryCode) {
+        console.warn(`⚠️ No country code found for "${country}" - try using a country name`);
+        return null;
+    }
+
+    // Use large flag image for background
+    const flagUrl = `https://flagcdn.com/w1280/${countryCode}.png`;
+    console.log(`🚩 Flag URL: ${flagUrl}`);
+
+    // Format country name properly (capitalize each word)
+    const formattedCountry = country
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
+
+    // Update the banner with country name and small flag
+    const flagBanner = document.getElementById('flagBanner');
+    const flagImage = document.getElementById('flagImage');
+    const destinationTitle = document.getElementById('destinationTitle');
+
+    if (flagBanner && flagImage && destinationTitle) {
+        flagImage.src = `https://flagcdn.com/w320/${countryCode}.png`;
+        flagImage.alt = `Flag`;
+        destinationTitle.textContent = formattedCountry;
+        flagBanner.style.display = 'block';
+    }
+
+    return flagUrl;
+}
+
+// Set destination background with flag
 async function setDestinationBackground(country) {
-    try {
-        console.log(`🎨 Loading background for ${country}...`);
+    // Get flag URL and display banner
+    const flagUrl = displayCountryFlag(country);
 
-        // Get country flag
-        const countryCode = getCountryCode(country);
-        let flagUrl = null;
-
-        if (countryCode) {
-            flagUrl = `https://flagcdn.com/w640/${countryCode}.png`;
-            console.log(`🚩 Flag URL: ${flagUrl}`);
+    // Set flag as the page background
+    if (flagUrl) {
+        // Create or update a style element to force the background
+        let flagStyle = document.getElementById('flag-bg-style');
+        if (!flagStyle) {
+            flagStyle = document.createElement('style');
+            flagStyle.id = 'flag-bg-style';
+            document.head.appendChild(flagStyle);
         }
 
-        // Try multiple image sources for better reliability
-        const imageSources = [
-            `https://source.unsplash.com/1920x1080/?${encodeURIComponent(country)},landscape`,
-            `https://source.unsplash.com/1920x1080/?${encodeURIComponent(country)},travel`,
-            `https://source.unsplash.com/1920x1080/?${encodeURIComponent(country)},nature`
-        ];
-
-        // Use the first source (will be random each time due to Unsplash behavior)
-        const imageUrl = imageSources[0];
-
-        console.log(`📸 Image URL: ${imageUrl}`);
-
-        // Preload the image before setting it
-        const img = new Image();
-        img.crossOrigin = 'Anonymous'; // Enable CORS for canvas analysis
-
-        const loadPromise = new Promise((resolve, reject) => {
-            const timeout = setTimeout(() => {
-                reject(new Error('Image load timeout'));
-            }, 10000); // 10 second timeout
-
-            img.onload = () => {
-                clearTimeout(timeout);
-                console.log('✅ Background image loaded successfully');
-                resolve();
-            };
-
-            img.onerror = (error) => {
-                clearTimeout(timeout);
-                console.error('❌ Failed to load background image:', error);
-                reject(error);
-            };
-        });
-
-        img.src = imageUrl;
-        await loadPromise;
-
-        // Extract colors from the image
-        const colors = extractColorsFromImage(img);
-
-        // Apply color theme
-        if (colors) {
-            applyColorTheme(colors);
-        }
-
-        // Set the background image
-        document.body.style.backgroundImage = `url("${imageUrl}")`;
-        document.body.classList.add('has-destination-bg');
-
-        // Display flag banner if flag is available
-        if (flagUrl) {
-            const flagBanner = document.getElementById('flagBanner');
-            const flagImage = document.getElementById('flagImage');
-            const destinationTitle = document.getElementById('destinationTitle');
-
-            if (flagBanner && flagImage && destinationTitle) {
-                flagImage.src = flagUrl;
-                flagImage.alt = `${country} Flag`;
-                destinationTitle.textContent = country;
-                flagBanner.style.display = 'block';
-                console.log(`🚩 Flag banner displayed for ${country}`);
+        flagStyle.textContent = `
+            body {
+                background: url("${flagUrl}") center/cover no-repeat fixed !important;
             }
-        }
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(255, 255, 255, 0.7) !important;
+                z-index: -1;
+                pointer-events: none;
+            }
+        `;
 
-        console.log(`🎨 Background successfully set for ${country}`);
-    } catch (error) {
-        console.warn('⚠️ Could not load destination background, using default gradient:', error.message);
-        // Keep default gradient if image fails to load
-        // Don't add the has-destination-bg class if image failed
+        console.log(`🚩 Flag background style injected: ${flagUrl}`);
     }
 }
 
