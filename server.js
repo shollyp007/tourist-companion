@@ -1085,6 +1085,31 @@ app.get('/js/:filename', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'js', req.params.filename));
 });
 
+// Static content pages for SEO and AdSense
+app.get('/about', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'about.html'));
+});
+
+app.get('/guides', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'guides.html'));
+});
+
+app.get('/tips', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'tips.html'));
+});
+
+// Destination guide pages
+app.get('/guides/:destination', (req, res) => {
+    const destination = req.params.destination;
+    const guidePath = path.join(__dirname, 'public', 'guides', `${destination}.html`);
+    res.sendFile(guidePath, (err) => {
+        if (err) {
+            // If guide not found, redirect to guides hub
+            res.redirect('/guides');
+        }
+    });
+});
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });

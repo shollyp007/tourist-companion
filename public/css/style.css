@@ -1184,3 +1184,518 @@ body.has-destination-bg .ad-container {
     background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.7) 100%);
     z-index: 1;
 }
+
+/* ================================
+   Navigation Header Styles
+   ================================ */
+
+.nav-header {
+    background: white;
+    padding: 15px 0;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--text-dark);
+}
+
+.nav-logo svg {
+    width: 40px;
+    height: 40px;
+}
+
+.nav-logo span {
+    font-size: 1.4rem;
+    font-weight: 700;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+    background: var(--primary-gradient);
+    color: white;
+}
+
+.nav-links a.active {
+    background: var(--primary-gradient);
+    color: white;
+}
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.nav-toggle span {
+    width: 25px;
+    height: 3px;
+    background: var(--text-dark);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/* ================================
+   Article Content Styles
+   ================================ */
+
+.article-hero {
+    background: var(--primary-gradient);
+    padding: 80px 20px 60px;
+    text-align: center;
+    color: white;
+}
+
+.article-hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+}
+
+.article-hero .subtitle {
+    font-size: 1.3rem;
+    opacity: 0.95;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.article-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    background: white;
+    min-height: 100vh;
+}
+
+.article-content h2 {
+    font-size: 2rem;
+    color: var(--text-dark);
+    margin: 50px 0 25px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid var(--theme-primary);
+}
+
+.article-content h2:first-of-type {
+    margin-top: 0;
+}
+
+.article-content h3 {
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    margin: 35px 0 20px;
+}
+
+.article-content p {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    color: var(--text-light);
+    margin-bottom: 20px;
+}
+
+.article-content ul,
+.article-content ol {
+    margin: 20px 0 30px 25px;
+}
+
+.article-content li {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text-light);
+    margin-bottom: 12px;
+}
+
+.article-content strong {
+    color: var(--text-dark);
+}
+
+/* ================================
+   Breadcrumb Styles
+   ================================ */
+
+.breadcrumb {
+    padding: 15px 0;
+    background: #f8f9fa;
+}
+
+.breadcrumb-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.breadcrumb-list {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    list-style: none;
+    flex-wrap: wrap;
+}
+
+.breadcrumb-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+}
+
+.breadcrumb-list a {
+    color: var(--theme-primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.breadcrumb-list a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-list .separator {
+    color: var(--text-light);
+}
+
+.breadcrumb-list .current {
+    color: var(--text-light);
+}
+
+/* ================================
+   Guide Card Styles
+   ================================ */
+
+.guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.guide-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.guide-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.25);
+}
+
+.guide-card-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.guide-card-content {
+    padding: 25px;
+}
+
+.guide-card-content h3 {
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+}
+
+.guide-card-content p {
+    color: var(--text-light);
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+.guide-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.guide-card-meta .read-time {
+    color: var(--text-light);
+}
+
+.guide-card-meta .read-more {
+    color: var(--theme-primary);
+    font-weight: 600;
+}
+
+/* ================================
+   Static Page Footer
+   ================================ */
+
+.page-footer {
+    background: var(--dark);
+    color: white;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    list-style: none;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.footer-copyright {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+}
+
+/* ================================
+   CTA Section
+   ================================ */
+
+.cta-section {
+    background: var(--primary-gradient);
+    padding: 60px 20px;
+    text-align: center;
+    color: white;
+    margin: 50px 0 0;
+}
+
+.cta-section h2 {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    border: none;
+    color: white;
+}
+
+.cta-section p {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    color: var(--theme-primary);
+    padding: 16px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ================================
+   Static Page Ad Container
+   ================================ */
+
+.static-ad-container {
+    background: #f8f9fa;
+    border-radius: 16px;
+    padding: 25px;
+    margin: 40px 0;
+    text-align: center;
+}
+
+.static-ad-container .ad-label {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+/* ================================
+   Tip Cards for Tips Page
+   ================================ */
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin: 30px 0;
+}
+
+.tip-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 30px;
+    border-radius: 16px;
+    border-left: 4px solid var(--theme-primary);
+}
+
+.tip-card h4 {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tip-card p {
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+/* ================================
+   Quick Facts Box
+   ================================ */
+
+.quick-facts {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+    border-radius: 16px;
+    padding: 30px;
+    margin: 30px 0;
+}
+
+.quick-facts h3 {
+    margin-top: 0;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+}
+
+.facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.fact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.fact-icon {
+    font-size: 1.5rem;
+}
+
+.fact-content strong {
+    display: block;
+    color: var(--text-dark);
+    margin-bottom: 3px;
+}
+
+.fact-content span {
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+/* ================================
+   Mobile Navigation
+   ================================ */
+
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: flex;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        flex-direction: column;
+        gap: 0;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        display: none;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links a {
+        padding: 15px 20px;
+        border-radius: 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .nav-links li:last-child a {
+        border-bottom: none;
+    }
+
+    .article-hero h1 {
+        font-size: 2rem;
+    }
+
+    .article-hero .subtitle {
+        font-size: 1.1rem;
+    }
+
+    .article-content {
+        padding: 40px 20px;
+    }
+
+    .article-content h2 {
+        font-size: 1.6rem;
+    }
+
+    .guides-grid {
+        grid-template-columns: 1fr;
+    }
+}

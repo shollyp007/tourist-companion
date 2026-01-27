@@ -36,6 +36,43 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Navigation Header -->
+    <nav class="nav-header" id="mainNav">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none">
+                    <circle cx="50" cy="50" r="45" stroke="url(#navGrad)" stroke-width="3" fill="none"/>
+                    <ellipse cx="50" cy="50" rx="20" ry="45" stroke="url(#navGrad)" stroke-width="2" fill="none"/>
+                    <line x1="5" y1="50" x2="95" y2="50" stroke="url(#navGrad)" stroke-width="2"/>
+                    <path d="M50 30 C 45 30, 42 33, 42 37 C 42 42, 50 52, 50 52 C 50 52, 58 42, 58 37 C 58 33, 55 30, 50 30 Z" fill="url(#navGrad2)"/>
+                    <circle cx="50" cy="37" r="3" fill="white"/>
+                    <defs>
+                        <linearGradient id="navGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#667eea"/>
+                            <stop offset="100%" style="stop-color:#764ba2"/>
+                        </linearGradient>
+                        <linearGradient id="navGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#f093fb"/>
+                            <stop offset="100%" style="stop-color:#f5576c"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Tourist Companion</span>
+            </a>
+            <div class="nav-toggle" onclick="toggleNav()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/" class="active">Home</a></li>
+                <li><a href="/guides">Travel Guides</a></li>
+                <li><a href="/tips">Travel Tips</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <!-- Emergency Button (Floating) -->
     <button id="emergencyBtn" class="emergency-floating-btn" title="Emergency Contacts & Safety">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -271,5 +308,10 @@
     </div>
 
     <script src="js/app.js"></script>
+    <script>
+        function toggleNav() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+    </script>
 </body>
 </html>

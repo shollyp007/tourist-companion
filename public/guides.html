@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Guides - Tourist Companion | Destination Guides & Travel Information</title>
+    <meta name="description" content="Explore our comprehensive travel guides for popular destinations worldwide. Get insider tips, safety information, and practical advice for Paris, Tokyo, London, New York, Dubai, and more.">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="/icons/icon-72x72.svg">
+</head>
+<body style="background: white;">
+    <!-- Navigation Header -->
+    <nav class="nav-header">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none">
+                    <circle cx="50" cy="50" r="45" stroke="url(#navGrad)" stroke-width="3" fill="none"/>
+                    <ellipse cx="50" cy="50" rx="20" ry="45" stroke="url(#navGrad)" stroke-width="2" fill="none"/>
+                    <line x1="5" y1="50" x2="95" y2="50" stroke="url(#navGrad)" stroke-width="2"/>
+                    <path d="M50 30 C 45 30, 42 33, 42 37 C 42 42, 50 52, 50 52 C 50 52, 58 42, 58 37 C 58 33, 55 30, 50 30 Z" fill="url(#navGrad2)"/>
+                    <circle cx="50" cy="37" r="3" fill="white"/>
+                    <defs>
+                        <linearGradient id="navGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#667eea"/>
+                            <stop offset="100%" style="stop-color:#764ba2"/>
+                        </linearGradient>
+                        <linearGradient id="navGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#f093fb"/>
+                            <stop offset="100%" style="stop-color:#f5576c"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>Tourist Companion</span>
+            </a>
+            <div class="nav-toggle" onclick="toggleNav()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/guides" class="active">Travel Guides</a></li>
+                <li><a href="/tips">Travel Tips</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-container">
+            <ul class="breadcrumb-list">
+                <li><a href="/">Home</a></li>
+                <li class="separator">/</li>
+                <li class="current">Travel Guides</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="article-hero">
+        <h1>Destination Travel Guides</h1>
+        <p class="subtitle">In-depth guides to help you plan unforgettable trips to the world's most exciting destinations</p>
+    </section>
+
+    <!-- Main Content -->
+    <main class="article-content" style="max-width: 1200px;">
+        <h2>Explore Our Destination Guides</h2>
+        <p>Our comprehensive destination guides provide everything you need to plan your perfect trip. From iconic landmarks and hidden gems to practical tips on transportation, accommodation, and local cuisine, we've got you covered. Each guide is crafted to help both first-time visitors and seasoned travelers make the most of their journey.</p>
+
+        <!-- Guide Cards Grid -->
+        <div class="guides-grid">
+            <!-- Paris Guide Card -->
+            <a href="/guides/paris-france" class="guide-card">
+                <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&q=80" alt="Eiffel Tower in Paris, France" class="guide-card-image">
+                <div class="guide-card-content">
+                    <h3>Paris, France</h3>
+                    <p>Discover the City of Light with our comprehensive guide to Parisian culture, cuisine, iconic landmarks, and hidden gems.</p>
+                    <div class="guide-card-meta">
+                        <span class="read-time">15 min read</span>
+                        <span class="read-more">Read Guide &rarr;</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Tokyo Guide Card -->
+            <a href="/guides/tokyo-japan" class="guide-card">
+                <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=600&q=80" alt="Tokyo cityscape with Tokyo Tower" class="guide-card-image">
+                <div class="guide-card-content">
+                    <h3>Tokyo, Japan</h3>
+                    <p>Navigate the fascinating blend of ancient tradition and cutting-edge technology in Japan's vibrant capital city.</p>
+                    <div class="guide-card-meta">
+                        <span class="read-time">18 min read</span>
+                        <span class="read-more">Read Guide &rarr;</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- London Guide Card -->
+            <a href="/guides/london-uk" class="guide-card">
+                <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&q=80" alt="Tower Bridge in London, UK" class="guide-card-image">
+                <div class="guide-card-content">
+                    <h3>London, United Kingdom</h3>
+                    <p>Explore royal palaces, world-class museums, historic neighborhoods, and the best of British culture.</p>
+                    <div class="guide-card-meta">
+                        <span class="read-time">16 min read</span>
+                        <span class="read-more">Read Guide &rarr;</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- New York Guide Card -->
+            <a href="/guides/new-york-usa" class="guide-card">
+                <img src="https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?w=600&q=80" alt="New York City skyline" class="guide-card-image">
+                <div class="guide-card-content">
+                    <h3>New York City, USA</h3>
+                    <p>Experience the city that never sleeps - from Broadway shows to Central Park, and everything in between.</p>
+                    <div class="guide-card-meta">
+                        <span class="read-time">17 min read</span>
+                        <span class="read-more">Read Guide &rarr;</span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Dubai Guide Card -->
+            <a href="/guides/dubai-uae" class="guide-card">
+                <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80" alt="Dubai skyline with Burj Khalifa" class="guide-card-image">
+                <div class="guide-card-content">
+                    <h3>Dubai, UAE</h3>
+                    <p>Discover the city of superlatives - from the world's tallest building to luxurious resorts and desert adventures.</p>
+                    <div class="guide-card-meta">
+                        <span class="read-time">14 min read</span>
+                        <span class="read-more">Read Guide &rarr;</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Ad Container -->
+        <div class="static-ad-container">
+            <div class="ad-label">Advertisement</div>
+            <div class="ad-unit" id="adsense-guides">
+                <!-- AdSense code will be inserted here -->
+            </div>
+        </div>
+
+        <h2>Planning Your Next Adventure</h2>
+        <p>Choosing your next travel destination is an exciting part of the journey. Whether you're drawn to European history and art, Asian culture and cuisine, American energy and entertainment, or Middle Eastern luxury and hospitality, our guides help you understand what makes each destination special.</p>
+
+        <p>Each guide includes practical information on the best time to visit, how to get around, where to stay for different budgets, and essential tips for making the most of your trip. We also cover safety considerations, cultural etiquette, and local customs to help you travel respectfully and confidently.</p>
+
+        <h3>What Our Guides Cover</h3>
+        <ul>
+            <li><strong>Must-See Attractions:</strong> Iconic landmarks and popular sites that define each destination</li>
+            <li><strong>Hidden Gems:</strong> Lesser-known spots beloved by locals and experienced travelers</li>
+            <li><strong>Food and Dining:</strong> Local cuisine, restaurant recommendations, and food safety tips</li>
+            <li><strong>Transportation:</strong> How to get around efficiently using public transit, taxis, and walking</li>
+            <li><strong>Accommodation:</strong> Options for every budget from hostels to luxury hotels</li>
+            <li><strong>Cultural Insights:</strong> Local customs, etiquette, and cultural context</li>
+            <li><strong>Safety Information:</strong> Neighborhood safety, common scams, and emergency resources</li>
+            <li><strong>Practical Tips:</strong> Money, language, tipping, and other everyday considerations</li>
+        </ul>
+
+        <h2>More Destinations Coming Soon</h2>
+        <p>We're constantly expanding our collection of destination guides to cover more of the world's incredible places. From ancient cities to tropical paradises, bustling metropolises to tranquil retreats, we're working to provide comprehensive guides for travelers of all interests and budgets.</p>
+
+        <p>In the meantime, use our interactive destination safety tool on the home page to research any country in our database. Get real-time safety assessments, emergency contact information, and cost estimates for destinations around the globe.</p>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2>Research Any Destination</h2>
+            <p>Use our interactive tool for personalized safety assessments and travel information</p>
+            <a href="/" class="cta-button">
+                Try Our Safety Tool
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <div class="footer-container">
+            <ul class="footer-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/guides">Travel Guides</a></li>
+                <li><a href="/tips">Travel Tips</a></li>
+                <li><a href="/about">About Us</a></li>
+            </ul>
+            <p class="footer-copyright">&copy; 2024 Tourist Companion. Your trusted travel safety guide.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleNav() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
